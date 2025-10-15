@@ -28,7 +28,6 @@ public class Libro {
 		this.autor = new Autor(0);
 		this.editotrial = new Editorial(0);
 	}
-	
 	/**
 	 * @param id_libro
 	 * @param titulo
