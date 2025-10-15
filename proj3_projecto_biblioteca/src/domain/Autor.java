@@ -1,4 +1,4 @@
-package db;
+package domain;
 
 public class Autor {
 	
