@@ -7,7 +7,7 @@ public class Libro {
 	private Genero genero;
 	private float precio;
 	private Autor autor;
-	private Editorial editotrial;
+	private Editorial editorial;
 	
 	
 	
@@ -26,7 +26,7 @@ public class Libro {
 		this.genero = genero;
 		this.precio = precio;
 		this.autor = new Autor(0);
-		this.editotrial = new Editorial(0);
+		this.editorial = new Editorial(0);
 	}
 	/**
 	 * @param id_libro
@@ -36,14 +36,14 @@ public class Libro {
 	 * @param autor
 	 * @param editotrial
 	 */
-	public Libro(int id_libro, String titulo, Genero genero, float precio, Autor autor, Editorial editotrial) {
+	public Libro(int id_libro, String titulo, Genero genero, float precio, Autor autor, Editorial editorial) {
 		
 		this.id_libro = id_libro;
 		this.titulo = titulo;
 		this.genero = genero;
 		this.precio = precio;
 		this.autor = autor;
-		this.editotrial = editotrial;
+		this.editorial = editorial;
 	}
 
 	/**
@@ -119,21 +119,21 @@ public class Libro {
 	/**
 	 * @return the editotrial
 	 */
-	public Editorial getEditotrial() {
-		return editotrial;
+	public Editorial getEditorial() {
+		return editorial;
 	}
 
 	/**
 	 * @param editotrial the editotrial to set
 	 */
-	public void setEditotrial(Editorial editotrial) {
-		this.editotrial = editotrial;
+	public void setEditorial(Editorial editotrial) {
+		this.editorial = editorial;
 	}
 
 	@Override
 	public String toString() {
 		return String.format("Libro [id_libro=%s, titulo=%s, genero=%s, precio=%s, autor=%s, editotrial=%s]", id_libro,
-				titulo, genero, precio, autor, editotrial);
+				titulo, genero, precio, autor, editorial);
 	}
 	
 	

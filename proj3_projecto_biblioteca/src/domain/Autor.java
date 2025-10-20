@@ -78,7 +78,11 @@ public class Autor {
 		this.apellido = apellido;
 	}
 
-
+	public String getNombreApellido()
+	{
+		return this.nombre + " "+this.apellido;
+	}
+	
 	/**
 	 * @return the pais
 	 */
