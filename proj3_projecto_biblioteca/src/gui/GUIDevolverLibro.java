@@ -2,15 +2,18 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Arrays;
+import java.util.EventObject;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -21,11 +24,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.CellEditorListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import domain.*;
 
@@ -36,76 +42,61 @@ public class GUIDevolverLibro extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<Libro> libros;
+	private List<Prestamo> prestamos;
 	
-	private JTable tablalibros;
-	private DefaultTableModel modeloDatoslibros;
+	private JTable tablaprestamos;
+	private DefaultTableModel modeloDatosprestamos;
 	private DefaultTableModel modeloDatosPersonajes;
 	private JScrollPane scrollPanePersonajes;
-	private JTextField txtFiltro;
+	private JTextField txtvalor;
+	private Libro seleccionado;
 	
-	public GUIDevolverLibro(List<Libro> libros) {
-		//Asignamos la lista de libros a la varaible local
-		this.libros = libros;
+	public GUIDevolverLibro(List<Prestamo> prestamos) {
+		//Asignamos la lista de prestamos a la varaible local
+		this.prestamos = prestamos;
 
 		//Se inicializan las tablas y sus modelos de datos
 		this.initTables();
-		//Se cargan los libros en la tabla de libros
-		this.loadlibros();
+		//Se cargan los prestamos en la tabla de prestamos
+		this.loadprestamos();
 		
-		//La tabla de libros se inserta en un panel con scroll
-		JScrollPane scrollPanelibros = new JScrollPane(this.tablalibros);
-		scrollPanelibros.setBorder(new TitledBorder("devolver libros"));
-		this.tablalibros.setFillsViewportHeight(true);
-		
-				
-		//Se define el comportamiento del campo de texto del filtro
-		this.txtFiltro = new JTextField(20);		
-		JPanel panelFiltro = new JPanel();
-		panelFiltro.add(new JLabel("Filtro por título: "));
-		panelFiltro.add(txtFiltro);
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////			
-		/**
-		 * •	Filtra la tabla de libros a partir del valor que se introduzca en la caja de texto.
-		 *  A medida que se va introduciendo texto, los libros que aparezcen en la tabla deben incluir 
-		 *  el texto del filtro en su título. Si no hay texto, aparecerán todos los libros.
-		 */
-		txtFiltro.getDocument().addDocumentListener(new DocumentListener()
-				{
-
-					@Override
-					public void insertUpdate(DocumentEvent e) {
-						filtrarlibros();
-						
-					}
-
-					@Override
-					public void removeUpdate(DocumentEvent e) {
-						filtrarlibros();
-						
-					}
-
-					@Override
-					public void changedUpdate(DocumentEvent e) {
-						
-						
-					}
-			
-				});
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+		//La tabla de prestamos se inserta en un panel con scroll
+		JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaprestamos);
+		scrollPaneprestamos.setBorder(new TitledBorder(""));
+		this.tablaprestamos.setFillsViewportHeight(true);
 		
 				
-		//////////////////////////////////////////////////////////////////////
-		JPanel panellibros = new JPanel();
-		panellibros.setLayout(new BorderLayout());
-		panellibros.add(BorderLayout.CENTER, scrollPanelibros);
-		panellibros.add(BorderLayout.NORTH, panelFiltro);
+		//Consiste en el titulo del texto
+		JLabel titulo = new JLabel("Devolución de prestamos", SwingConstants.CENTER);
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		titulo.setVerticalAlignment(SwingConstants.NORTH);
+		titulo.setFont(new Font(titulo.getFont().getName(), titulo.getFont().getStyle(), 30));
+		
+		//añadir los JButton del final
+		JButton pagar = new JButton("Pagar");
+		JButton cancelar = new JButton("Cancelar");
+		
+		this.txtvalor = new JTextField(20);		
+		JPanel panelPrecio = new JPanel();
+		panelPrecio.add(new JLabel("Precio a pagar: "));
+		panelPrecio.add(txtvalor);
+		panelPrecio.add(pagar);
+		panelPrecio.add(cancelar);
+		
+		
+		
+		
+		JPanel panelprestamos = new JPanel();
+		panelprestamos.setLayout(new BorderLayout());
+		panelprestamos.add(BorderLayout.CENTER, scrollPaneprestamos);
+		panelprestamos.add(BorderLayout.NORTH, titulo);
+		panelprestamos.add(BorderLayout.SOUTH,panelPrecio);
 				
 		//El Layout del panel principal es un matriz con 2 filas y 1 columna
 		this.getContentPane().setLayout(new GridLayout(2, 1));
-		this.getContentPane().add(panellibros);
+		this.getContentPane().add(panelprestamos);
 		
-		this.setTitle("Ventana principal de libros");		
+		this.setTitle("Ventana principal de prestamos");		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		this.setSize(800, 600);
@@ -113,90 +104,27 @@ public class GUIDevolverLibro extends JFrame{
 		this.setVisible(true);		
 	}
 	
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
-	/**
-	 * •	Filtra la tabla de libros a partir del valor que se introduzca en la caja de texto.
-	 *  A medida que se va introduciendo texto, los libros que aparezcen en la tabla deben incluir 
-	 *  el texto del filtro en su título. Si no hay texto, aparecerán todos los libros.
-	 */
-	private void filtrarlibros() {
-		//Se borran los datos del modelo de datos
-		this.modeloDatoslibros.setRowCount(0);
-		//Se añaden los libros uno a uno al modelo de datos
-		for(Libro actual: this.libros)
-		{
-			//se obtiene el objeto de textarea 
-			/**
-			 * el contains diferencia entre mayusculas y minusculas
-			 */
-			if(actual.getTitulo().contains(txtFiltro.getText()))
-			{
-				this.modeloDatoslibros.addRow(
-						new Object[] {actual.getTitulo(), actual.getAutor().getNombreApellido(), actual.getEditorial().getNombre(), actual.getGenero().name(), actual.getPrecio()});
-			}
-		}
-		
-//		this.libros.forEach(c -> this.modeloDatoslibros.addRow(
-//				new Object[] {c.getId(), c.getEditorial(), c.getTitulo(), c.getPersonajes().size()} )
-//		);
-	}
-	
-	//añadir solo los libros que coincidan con el contenido del mensaje
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 	private void initTables() {
 		//Cabecera del modelo de datos
-		Vector<String> cabeceralibros = new Vector<String>(Arrays.asList( "TITULO", "AUTOR", "EDITORIAL", "GENERO","PRECIO"));
+		Vector<String> cabeceraprestamos = new Vector<String>(Arrays.asList( "ID","TITULO", "GENERO","AUTOR", "FECHA DEL PRESTAMO"));
 		
 		
-		//Se crea el modelo de datos para la tabla de libros sólo con la cabecera
+		//Se crea el modelo de datos para la tabla de prestamos sólo con la cabecera
 		/**
 		 * Se pasa un modelo de la base de datos que actua con vectores
 		 */
-		this.modeloDatoslibros = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceralibros);
-		//Se crea la tabla de libros con el modelo de datos
-		this.tablalibros = new JTable(this.modeloDatoslibros);
+		this.modeloDatosprestamos = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraprestamos);
+		//Se crea la tabla de prestamos con el modelo de datos
+		this.tablaprestamos = new JTable(this.modeloDatosprestamos);
 		
 		
-		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-			JLabel result = new JLabel(value.toString());
-						
-			
-			//La filas pares e impares se renderizan de colores diferentes de la tabla de comics			
-			if (table.equals(tablalibros)) {
-				if (row % 2 == 0) {
-					result.setBackground(new Color(250, 249, 249));
-				} else {
-					result.setBackground(new Color(190, 227, 219));
-				}
-			//Se usan los colores por defecto de la tabla para las celdas de la tabla de personajes
-			} else {
-				result.setBackground(table.getBackground());
-				result.setForeground(table.getForeground());
-			}
-			
-			//Si la celda está seleccionada se renderiza con el color de selección por defecto
-			if (isSelected) {
-				result.setBackground(table.getSelectionBackground());
-				result.setForeground(table.getSelectionForeground());			
-			}
-			
-			
-			result.setOpaque(true);
-			
-			return result;
-		};
+		
 		
 		
 		TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());			
 			result.setHorizontalAlignment(JLabel.CENTER);
 			
-			switch (value.toString()) {
-				case "TÍTULO":
-				case "NOMBRE":
-				case "EMAIL":
-					result.setHorizontalAlignment(JLabel.LEFT);
-			}
 			
 			result.setBackground(table.getBackground());
 			result.setForeground(table.getForeground());
@@ -205,39 +133,52 @@ public class GUIDevolverLibro extends JFrame{
 			
 			return result;
 		};
-		//Se crea un CellEditor a partir de un JComboBox()
+		
+		
 		
 
 		
-		//Se define la altura de las filas de la tabla de libros
-		this.tablalibros.setRowHeight(26);
+		//Se define la altura de las filas de la tabla de prestamos
+		this.tablaprestamos.setRowHeight(26);
 		
 		//Se deshabilita la reordenación de columnas
-		this.tablalibros.getTableHeader().setReorderingAllowed(false);
+		this.tablaprestamos.getTableHeader().setReorderingAllowed(false);
 		//Se deshabilita el redimensionado de las columna
-		this.tablalibros.getTableHeader().setResizingAllowed(false);
+		this.tablaprestamos.getTableHeader().setResizingAllowed(false);
 		//Se definen criterios de ordenación por defecto para cada columna
-		this.tablalibros.setAutoCreateRowSorter(true);
+		this.tablaprestamos.setAutoCreateRowSorter(true);
+		
+		//hace que solo se puede seleccionar una fila
+		this.tablaprestamos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		this.tablaprestamos.getSelectionModel().addListSelectionListener(e -> {
+			//Se obtiene el ID del comic de la fila seleccionada si es distinta de -1
+			if (tablaprestamos.getSelectedRow() != -1) {
+				seleccionado = (this.prestamos.get((int) tablaprestamos.getValueAt(tablaprestamos.getSelectedRow(), 0) - 1)).getLibro();
+				txtvalor.setText(String.valueOf(seleccionado.getPrecio()));
+				
+			}
+		});
 		
 		//Se establecen los renderers al la cabecera y el contenido
-		this.tablalibros.getTableHeader().setDefaultRenderer(headerRenderer);		
+		this.tablaprestamos.getTableHeader().setDefaultRenderer(headerRenderer);		
+		
+		
 
 		
-		
-//		//Se define la anchura de la columna Título
-//		this.tablalibros.getColumnModel().getColumn(2).setPreferredWidth(400);
-		
-		
-		
 	}
 		
-	private void loadlibros() {
+	private void loadprestamos() {
 		//Se borran los datos del modelo de datos
-		this.modeloDatoslibros.setRowCount(0);
-		//Se añaden los libros uno a uno al modelo de datos
-		this.libros.forEach(c -> this.modeloDatoslibros.addRow(
-				new Object[] {c.getTitulo(), c.getAutor().getNombreApellido(), c.getEditorial().getNombre(), c.getGenero().name(), c.getPrecio()} )
+		this.modeloDatosprestamos.setRowCount(0);
+		//Se añaden los prestamos uno a uno al modelo de datosd
+		this.prestamos.forEach(c -> this.modeloDatosprestamos.addRow(
+				new Object[] {c.getId(), c.getLibro().getTitulo(),
+						c.getLibro().getGenero().name(),
+						c.getLibro().getAutor().getNombreApellido(),
+						c.getFecha_inicial_prestamo()} )
 		);
 	}
+	
 	
 }

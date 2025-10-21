@@ -1,5 +1,6 @@
 package domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Prestamo {
@@ -7,21 +8,21 @@ public class Prestamo {
 	private int id;
 	private Libro libro;
 	private Miembro miembro;
-	private LocalDateTime fecha_inicial_prestamo;
+	private LocalDate fecha_inicial_prestamo;
 	private float tiempo_prestamo;
 	/**
 	 * @param id
 	 * @param libro
 	 * @param miembro
-	 * @param fecha_inicial_prestamo
+	 * @param localDate
 	 * @param tiempo_prestamo
 	 */
-	public Prestamo(int id, Libro libro, Miembro miembro, LocalDateTime fecha_inicial_prestamo, float tiempo_prestamo) {
+	public Prestamo(int id, Libro libro, Miembro miembro, LocalDate localDate, float tiempo_prestamo) {
 		super();
 		this.id = id;
 		this.libro = libro;
 		this.miembro = miembro;
-		this.fecha_inicial_prestamo = fecha_inicial_prestamo;
+		this.fecha_inicial_prestamo = localDate;
 		this.tiempo_prestamo = tiempo_prestamo;
 	}
 	/**
@@ -63,13 +64,13 @@ public class Prestamo {
 	/**
 	 * @return the fecha_inicial_prestamo
 	 */
-	public LocalDateTime getFecha_inicial_prestamo() {
+	public LocalDate getFecha_inicial_prestamo() {
 		return fecha_inicial_prestamo;
 	}
 	/**
 	 * @param fecha_inicial_prestamo the fecha_inicial_prestamo to set
 	 */
-	public void setFecha_inicial_prestamo(LocalDateTime fecha_inicial_prestamo) {
+	public void setFecha_inicial_prestamo(LocalDate fecha_inicial_prestamo) {
 		this.fecha_inicial_prestamo = fecha_inicial_prestamo;
 	}
 	/**
