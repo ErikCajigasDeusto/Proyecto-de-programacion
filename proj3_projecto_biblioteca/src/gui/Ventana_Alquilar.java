@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -75,7 +77,6 @@ public class Ventana_Alquilar extends JFrame {
 		contentPanel.setBorder(new TitledBorder("alquilar Libros"));
 		panelPrincipal.add(contentPanel, BorderLayout.CENTER);
 		this.TablalibrosDisponibles.setFillsViewportHeight(true);
-		contentPanel.add(TablalibrosDisponibles);
 		//Titulo
 		JTextField tituloVentana = new JTextField("Alquilar Libro");
 		tituloVentana.setEditable(false);
@@ -106,26 +107,22 @@ public class Ventana_Alquilar extends JFrame {
 			result.setOpaque(true);
 			return result;
 		};
-		TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
-			JLabel result = new JLabel(value.toString());			
-			result.setHorizontalAlignment(JLabel.CENTER);
+		TablalibrosDisponibles.getTableHeader().setDefaultRenderer(new TableCellRenderer(){
 			
-			switch (value.toString()) {
-				case "TÍTULO":
-				case "NOMBRE":
-				case "EMAIL":
-					result.setHorizontalAlignment(JLabel.LEFT);
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+				JLabel label = new JLabel(value.toString());
+				label.setOpaque(true);
+				label.setBackground(new Color(255, 255, 255));
+				label.setHorizontalAlignment(SwingConstants.LEFT);
+				return label;
 			}
-			result.setBackground(table.getBackground());
-			result.setForeground(table.getForeground());
-			result.setOpaque(true);
-			return result;
-		};
+			
+		});
 		this.TablalibrosDisponibles.setRowHeight(26);
 		this.TablalibrosDisponibles.getTableHeader().setReorderingAllowed(false);
 		this.TablalibrosDisponibles.getTableHeader().setResizingAllowed(false);
 		this.TablalibrosDisponibles.setAutoCreateRowSorter(true);
-		this.TablalibrosDisponibles.getTableHeader().setDefaultRenderer(headerRenderer);	
 	}
 	private void loadLibros() {
 		this.modeloDatos.setRowCount(0);
