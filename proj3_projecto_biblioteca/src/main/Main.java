@@ -27,6 +27,7 @@ public class Main {
 		
 		//Lambda expression para abrir la ventana Principal
 				SwingUtilities.invokeLater(() -> new GUIDevolverLibro(libros));
+				SwingUtilities.invokeLater(() -> new Ventana_Alquilar(libros));
 		
 	}
 
