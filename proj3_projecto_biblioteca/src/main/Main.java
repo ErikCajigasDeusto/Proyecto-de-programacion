@@ -47,7 +47,9 @@ public class Main {
 		prestamos.add(prestamo6);
 		
 		//Lambda expression para abrir la ventana Principal
+
 				SwingUtilities.invokeLater(() -> new GUIDevolverLibro(prestamos));
+			//	SwingUtilities.invokeLater(() -> new Ventana_Alquilar(libros));
 		
 	}
 
