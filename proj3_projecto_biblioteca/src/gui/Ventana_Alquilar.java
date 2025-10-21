@@ -36,20 +36,12 @@ public class Ventana_Alquilar extends JFrame {
 		
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(320, 240);
+		setSize(800, 600);
 		setLocationRelativeTo(null);
 		
 		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(new GridLayout(3, 1));
 		add(panelPrincipal, BorderLayout.CENTER);
-		//Botones
-		JPanel panelBotones = new JPanel();
-		panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
-		JButton buscar = new JButton("buscar");
-		panelBotones.add(buscar);
-		JButton alquilar = new JButton("alquilar");
-		panelBotones.add(alquilar);
-		JButton salir = new JButton("salir");
-		panelBotones.add(salir);
 		//Buscador
 		JPanel panelBuscador = new JPanel();
 		panelBuscador.setLayout(new GridLayout(3, 2));
@@ -77,6 +69,15 @@ public class Ventana_Alquilar extends JFrame {
 		contentPanel.setBorder(new TitledBorder("alquilar Libros"));
 		panelPrincipal.add(contentPanel, BorderLayout.CENTER);
 		this.TablalibrosDisponibles.setFillsViewportHeight(true);
+		//Botones
+		JPanel panelBotones = new JPanel();
+		panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
+		JButton buscar = new JButton("buscar");
+		panelBotones.add(buscar);
+		JButton alquilar = new JButton("alquilar");
+		panelBotones.add(alquilar);
+		JButton salir = new JButton("salir");
+		panelBotones.add(salir);
 		//Titulo
 		JTextField tituloVentana = new JTextField("Alquilar Libro");
 		tituloVentana.setEditable(false);
