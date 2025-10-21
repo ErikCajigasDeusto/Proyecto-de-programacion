@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +22,7 @@ public VentanaBiblioteca() {
 	JPanel panelBiblio= new JPanel();
 	panelBiblio.setBackground(Color.WHITE);
 	JLabel titulo=new JLabel("Biblioteca");
+	titulo.setFont(new Font("Arial",Font.BOLD,30));
 	panelBiblio.add(titulo);
 	add(panelBiblio,BorderLayout.NORTH);
 	
