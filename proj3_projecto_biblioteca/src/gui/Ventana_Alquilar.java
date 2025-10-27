@@ -23,15 +23,16 @@ import javax.swing.table.TableCellRenderer;
 
 import domain.Libro;
 import domain.Genero;
+import domain.Prestamo;
 
 public class Ventana_Alquilar extends JFrame {
 	//iniciación de variables
 	private static final long serialVersionUID = 1L;
-	private List<Libro> libros;
+	private List<Prestamo> libros;
 	public DefaultTableModel modeloDatos;
 	public JTable TablalibrosDisponibles;
 	//creación de ventana
-	public Ventana_Alquilar(List<Libro> libros) {
+	public Ventana_Alquilar(List<Prestamo> libros) {
 		this.libros = libros;
 		
 		
@@ -128,7 +129,7 @@ public class Ventana_Alquilar extends JFrame {
 	private void loadLibros() {
 		this.modeloDatos.setRowCount(0);
 		this.libros.forEach(c -> this.modeloDatos.addRow(
-				new Object[] {c.getTitulo(), c.getGenero().name(), c.getAutor().getNombreApellido(), c.getPrecio(), Math.random(), true } )
+				new Object[] {c.getLibro().getTitulo(), c.getLibro().getGenero().name(), c.getLibro().getAutor().getNombreApellido(), c.getLibro().getPrecio(), c.getTiempo_prestamo(), true } )
 		);
 	}
 }
