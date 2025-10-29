@@ -48,8 +48,8 @@ public class Main {
 		
 		//Lambda expression para abrir la ventana Principal
 
-				SwingUtilities.invokeLater(() -> new GUIDevolverLibro(prestamos));
-			//	SwingUtilities.invokeLater(() -> new Ventana_Alquilar(prestamos));
+			SwingUtilities.invokeLater(() -> new GUIDevolverLibro(prestamos));
+			//SwingUtilities.invokeLater(() -> new Ventana_Alquilar(prestamos));
 		
 	}
 

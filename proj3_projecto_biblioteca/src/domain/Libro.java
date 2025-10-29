@@ -8,6 +8,7 @@ public class Libro {
 	private float precio;
 	private Autor autor;
 	private Editorial editorial;
+	private static int duracionPrestamo = 5;
 	
 	
 	
@@ -130,11 +131,17 @@ public class Libro {
 		this.editorial = editorial;
 	}
 
+	public static int getDuracionPrestamo() {
+		return duracionPrestamo;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return String.format("Libro [id_libro=%s, titulo=%s, genero=%s, precio=%s, autor=%s, editotrial=%s]", id_libro,
 				titulo, genero, precio, autor, editorial);
 	}
+
 	
 	
 	
