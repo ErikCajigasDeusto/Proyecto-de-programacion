@@ -152,9 +152,6 @@ public class Ventana_Alquilar extends JFrame {
 	private void filtrarBusqueda() {
 		this.modeloDatos.setRowCount(0);
 		for (Libro libro : libros) {
-			if(String.valueOf(generoBox.getSelectedItem()).toUpperCase().equals(Genero.defecto.name().toUpperCase())) {
-				reset();
-			}
 			if(libro.getTitulo().toUpperCase().contains(tituloTexto.getText().toUpperCase())){
 				if(libro.getAutor().getNombreApellido().toUpperCase().contains(autorTexto.getText().toUpperCase())) {
 					if(libro.getGenero().name().toUpperCase().equals(String.valueOf(generoBox.getSelectedItem()).toUpperCase())) {
