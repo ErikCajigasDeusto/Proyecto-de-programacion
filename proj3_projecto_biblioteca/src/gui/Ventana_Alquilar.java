@@ -126,7 +126,7 @@ public class Ventana_Alquilar extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!seleccionado.equals(null)) {
+				if (seleccionado !=null) {
 					iniciarSesion();
 				}
 			}
@@ -142,14 +142,16 @@ public class Ventana_Alquilar extends JFrame {
 	private void iniciarSesion() {
 		boolean igual = false;
 		while(!igual) {
-			String username = JOptionPane.showInputDialog(null, "EScribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+			String username = JOptionPane.showInputDialog(null, "Escribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
 			String telefono = JOptionPane.showInputDialog(null, "Escribe tu telefono:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
-			for(Miembro miembro:miembros) {
-				if(username.equals(miembro.getNombre())) {
-					if(telefono.equals(miembro.getTelefono())) {
-						igual = true;
-						alquilar(miembro);
-						break;
+			if((username!=null)&&(telefono!=null)) {
+				for(Miembro miembro:miembros) {
+					if(username.equals(miembro.getNombre())) {
+						if(telefono.equals(miembro.getTelefono())) {
+							igual = true;
+							alquilar(miembro);
+							break;
+						}
 					}
 				}
 			}
