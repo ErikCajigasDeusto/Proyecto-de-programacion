@@ -143,11 +143,11 @@ public class Ventana_Alquilar extends JFrame {
 		boolean igual = false;
 		while(!igual) {
 			String username = JOptionPane.showInputDialog(null, "Escribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
-			String telefono = JOptionPane.showInputDialog(null, "Escribe tu telefono:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
-			if((username!=null)&&(telefono!=null)) {
+			String password = JOptionPane.showInputDialog(null, "Escribe tu telefono:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+			if((username!=null)&&(password!=null)) {
 				for(Miembro miembro:miembros) {
 					if(username.equals(miembro.getNombre())) {
-						if(telefono.equals(miembro.getTelefono())) {
+						if(password.equals(miembro.getpassword())) {
 							igual = true;
 							alquilar(miembro);
 							break;

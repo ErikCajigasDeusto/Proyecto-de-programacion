@@ -27,21 +27,28 @@ public class Main {
 		libros.add(mlp);
 		libros.add(biblia);
 		
-		Miembro ofelia = new Miembro(1,"Ofelia","Tonelaje","91111112");
-		Miembro bacterio = new Miembro(2,"Bacterio","Tonelaje","9862748726");
-		Miembro superin = new Miembro(3,"Super","Intendente","919372761");
+		Miembro ofelia = new Miembro(1,"Ofelia","Tonelaje","123");
+		Miembro bacterio = new Miembro(2,"Bacterio","Tonelaje","234");
+		Miembro superin = new Miembro(3,"Super","Intendente","567");
+		Miembro lola = new Miembro(4,"lola","bunny","432");
+		Miembro rupert = new Miembro(5,"rupert","red","156");
+		Miembro oscar = new Miembro(6,"oscar","olivera","999");
+		
 		List<Miembro> miembros = new ArrayList<Miembro>();
 		miembros.add(ofelia);
 		miembros.add(bacterio);
 		miembros.add(superin);
+		miembros.add(lola);
+		miembros.add(rupert);
+		miembros.add(oscar);
 		
 		List<Prestamo> prestamos = new ArrayList<Prestamo>();
 		Prestamo prestamo1 = new Prestamo(1, mlp, ofelia, LocalDate.of(2011, 10, 21), 0);
-		Prestamo prestamo2 = new Prestamo(2, biblia, ofelia, LocalDate.of(2013, 10, 21), 0);
+		Prestamo prestamo2 = new Prestamo(2, biblia, bacterio, LocalDate.of(2013, 10, 21), 0);
 		Prestamo prestamo3 = new Prestamo(3, quiniela, ofelia, LocalDate.of(2012, 10, 21), 0);
-		Prestamo prestamo4 = new Prestamo(4, biblia, ofelia, LocalDate.of(2022, 10, 21), 0);
+		Prestamo prestamo4 = new Prestamo(4, biblia, superin, LocalDate.of(2022, 10, 21), 0);
 		Prestamo prestamo5 = new Prestamo(5, quiniela, ofelia, LocalDate.of(2015, 10, 21), 0);
-		Prestamo prestamo6 = new Prestamo(6, biblia, ofelia, LocalDate.of(2024, 10, 21), 0);
+		Prestamo prestamo6 = new Prestamo(6, biblia, oscar, LocalDate.of(2024, 10, 21), 0);
 		
 		prestamos.add(prestamo1);
 		prestamos.add(prestamo2);
@@ -49,11 +56,12 @@ public class Main {
 		prestamos.add(prestamo4);
 		prestamos.add(prestamo5);
 		prestamos.add(prestamo6);
+
 		
 		//Lambda expression para abrir la ventana Principal
-
-			//SwingUtilities.invokeLater(() -> new GUIDevolverLibro(prestamos));
-			SwingUtilities.invokeLater(() -> new Ventana_Alquilar(libros, miembros));
+			
+			SwingUtilities.invokeLater(() -> new GUIDevolverLibro(prestamos,miembros));
+			//SwingUtilities.invokeLater(() -> new Ventana_Alquilar(libros, miembros));
 		
 	}
 
