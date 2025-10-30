@@ -1,5 +1,6 @@
 package domain;
 
 public enum Genero {
-	accion,aventura,misterio,fantasia,romance,comedia,bibliografia,defecto
+	ACCION, AVENTURA, MISTERIO, FANTASIA, ROMANCE, COMEDIA,BIBLIOGRAFIA, DEFECTO, 
+	POESIA, CIENCIA, HISTORIA, FICCION, DRAMA
 }
