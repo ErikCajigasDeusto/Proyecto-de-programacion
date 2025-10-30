@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -36,6 +37,7 @@ public class Ventana_Alquilar extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private List<Libro> libros;
 	private List<Prestamo> prestamos = new ArrayList<>();
+	private List<Miembro> miembros;
 	private int contador = 0;
 	private Libro seleccionado;
 	public DefaultTableModel modeloDatos;
@@ -44,8 +46,9 @@ public class Ventana_Alquilar extends JFrame {
 	JTextField autorTexto = new JTextField();
 	JComboBox<Genero> generoBox = new JComboBox<Genero>();
 	//creación de ventana
-	public Ventana_Alquilar(List<Libro> libros) {
+	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros) {
 		this.libros = libros;
+		this.miembros = miembros;
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800, 600);
@@ -123,7 +126,9 @@ public class Ventana_Alquilar extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				alquilar();
+				if (!seleccionado.equals(null)) {
+					iniciarSesion();
+				}
 			}
 		});
 		salir.addActionListener(new ActionListener() {
@@ -134,12 +139,32 @@ public class Ventana_Alquilar extends JFrame {
 			}
 		});
 	}
+	private void iniciarSesion() {
+		boolean igual = false;
+		while(!igual) {
+			String username = JOptionPane.showInputDialog(null, "EScribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+			String telefono = JOptionPane.showInputDialog(null, "Escribe tu telefono:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+			for(Miembro miembro:miembros) {
+				if(username.equals(miembro.getNombre())) {
+					if(telefono.equals(miembro.getTelefono())) {
+						igual = true;
+						alquilar(miembro);
+						break;
+					}
+				}
+			}
+			if (!igual) {
+				System.out.println("No se ha encontrado un usuario");
+			}
+		}
+	}
 	private void salir() {
 		
 	}
-	private void alquilar() {
-		prestamos.add(new Prestamo(contador, seleccionado, new Miembro(0, "Fulano", "Bengoa", "666666666"), LocalDate.now(), serialVersionUID));
+	private void alquilar(Miembro miembro) {
+		prestamos.add(new Prestamo(contador, seleccionado, miembro, LocalDate.now(), serialVersionUID));
 		contador ++;
+		System.out.println("Prestamo añadido");
 	}
 	private void reset() {
 		this.modeloDatos.setRowCount(0);

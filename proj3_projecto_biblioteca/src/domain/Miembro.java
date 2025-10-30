@@ -1,6 +1,6 @@
 package domain;
 
-public class Miembro {
+public class Miembro{
 	
 	private int id;
 	private String nombre;
@@ -120,6 +120,7 @@ public class Miembro {
 		return String.format("Miembro [id=%s, nombre=%s, apellido=%s, telefono=%s, membresia=%s]", id, nombre, apellido,
 				telefono, membresia);
 	}
+	
 	
 	
 	

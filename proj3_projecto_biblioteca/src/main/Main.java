@@ -30,6 +30,10 @@ public class Main {
 		Miembro ofelia = new Miembro(1,"Ofelia","Tonelaje","91111112");
 		Miembro bacterio = new Miembro(2,"Bacterio","Tonelaje","9862748726");
 		Miembro superin = new Miembro(3,"Super","Intendente","919372761");
+		List<Miembro> miembros = new ArrayList<Miembro>();
+		miembros.add(ofelia);
+		miembros.add(bacterio);
+		miembros.add(superin);
 		
 		List<Prestamo> prestamos = new ArrayList<Prestamo>();
 		Prestamo prestamo1 = new Prestamo(1, mlp, ofelia, LocalDate.of(2011, 10, 21), 0);
@@ -49,7 +53,7 @@ public class Main {
 		//Lambda expression para abrir la ventana Principal
 
 			//SwingUtilities.invokeLater(() -> new GUIDevolverLibro(prestamos));
-			SwingUtilities.invokeLater(() -> new Ventana_Alquilar(libros));
+			SwingUtilities.invokeLater(() -> new Ventana_Alquilar(libros, miembros));
 		
 	}
 
