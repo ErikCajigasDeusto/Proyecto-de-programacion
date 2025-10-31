@@ -211,6 +211,7 @@ public class Ventana_Alquilar extends JFrame {
 			result.setOpaque(true);
 			return result;
 		};
+		TablalibrosDisponibles.setDefaultRenderer(Object.class, cellRenderer);
 		TablalibrosDisponibles.getTableHeader().setDefaultRenderer(new TableCellRenderer(){
 			
 			@Override
