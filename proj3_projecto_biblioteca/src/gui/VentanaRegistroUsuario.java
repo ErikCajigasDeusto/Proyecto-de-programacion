@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -9,6 +11,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -27,7 +30,7 @@ public class VentanaRegistroUsuario extends JFrame {
     private JButton botonCancelar;
 
     public VentanaRegistroUsuario() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Biblioteca");
         setSize(400, 250);
         setLocationRelativeTo(null);
@@ -83,6 +86,24 @@ public class VentanaRegistroUsuario extends JFrame {
 
         // Agregar el panel principal al JFrame
         this.add(panelPrincipal);
+        
+     // BOTÓN CANCELAR
+        botonCancelar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int opcion = JOptionPane.showConfirmDialog(
+				        VentanaRegistroUsuario.this,
+				        "¿Seguro que desea salir?",
+				        "¿Salir?",
+				        JOptionPane.YES_NO_OPTION
+				    );
+
+				    if (opcion == JOptionPane.YES_OPTION) {
+				        dispose(); // Cierra la ventana
+				    }
+				}
+        });
 
         setVisible(true);
     }

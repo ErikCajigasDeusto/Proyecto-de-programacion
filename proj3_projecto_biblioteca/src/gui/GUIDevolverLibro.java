@@ -1,22 +1,11 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Arrays;
-import java.util.EventObject;
 import java.util.List;
 import java.util.Vector;
-
-import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,92 +14,74 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import domain.*;
 
+public class GUIDevolverLibro extends JPanel{
 
-public class GUIDevolverLibro extends JFrame{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private List<Prestamo> prestamos;
 	
 	private JTable tablaUsuarios;
 	private DefaultTableModel modeloUsuarios;
 	
-	private int filaseleccionada =-1;
+	private int filaseleccionada = -1;
 	private DefaultTableModel modeloLibros;
 	private JTable tablaLibros;
 	private JScrollPane scrollPanelibros;
 	private JTextField txtvalor;
 	private Libro seleccionado;
 	
-	public GUIDevolverLibro(List<Prestamo> prestamos) {
-		//Asignamos la lista de prestamos a la varaible local
-		this.prestamos = prestamos;
+	 public GUIDevolverLibro(List<Prestamo> prestamos) {
+	        this.prestamos = prestamos;
 
-		//Se inicializan las tablas y sus modelos de datos
-		this.initTables();
-		//Se cargan los prestamos en la tabla de prestamos
-		this.loadprestamos();
-		
-		//La tabla de prestamos se inserta en un panel con scroll
-		JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaUsuarios);
-		scrollPaneprestamos.setBorder(new TitledBorder(""));
-		this.tablaUsuarios.setFillsViewportHeight(true);
-		
-		
-//		//La tabla de personajes se inserta en otro panel con scroll
-		this.scrollPanelibros = new JScrollPane(this.tablaLibros);
-		this.scrollPanelibros.setBorder(new TitledBorder("Personajes"));		
-//		this.tablaLibros.setFillsViewportHeight(true);
-		
-				
-		//Consiste en el titulo del texto
-		JLabel titulo = new JLabel("Devolución de prestamos", SwingConstants.CENTER);
-		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setVerticalAlignment(SwingConstants.NORTH);
-		titulo.setFont(new Font(titulo.getFont().getName(), titulo.getFont().getStyle(), 30));
-		
-		//añadir los JButton del final
-		JButton pagar = new JButton("Pagar");
-		JButton cancelar = new JButton("Cancelar");
-		
-		this.txtvalor = new JTextField(20);		
-		JPanel panelPrecio = new JPanel();
-		panelPrecio.add(new JLabel("Precio a pagar: "));
-		panelPrecio.add(txtvalor);
-		panelPrecio.add(pagar);
-		panelPrecio.add(cancelar);
-		
-		
+	        // Inicializar tablas
+	        this.initTables();
+	        this.loadprestamos();
 
-		JPanel panelprestamos = new JPanel();
-		panelprestamos.setLayout(new BorderLayout());
-		panelprestamos.add(BorderLayout.CENTER, scrollPaneprestamos);
-		panelprestamos.add(BorderLayout.NORTH, titulo);
-		panelprestamos.add(BorderLayout.SOUTH,panelPrecio);
+	        // Scroll principal para la tabla de préstamos
+	        JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaUsuarios);
+	        scrollPaneprestamos.setBorder(new TitledBorder("Listado de préstamos"));
+	        this.tablaUsuarios.setFillsViewportHeight(true);
+
+	        // Etiqueta de título
+	        JLabel titulo = new JLabel("Devolución de préstamos", SwingConstants.CENTER);
+	        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+
+	        // Panel inferior con botones
+	        JButton pagar = new JButton("Pagar");
+	        JButton cancelar = new JButton("Cancelar");
+	        this.txtvalor = new JTextField(10);
+
+	        JPanel panelPrecio = new JPanel();
+	        panelPrecio.add(new JLabel("Precio a pagar:"));
+	        panelPrecio.add(txtvalor);
+	        panelPrecio.add(pagar);
+	        panelPrecio.add(cancelar);
+
+	        // Panel intermedio con la tabla
+	        JPanel panelPrestamos = new JPanel(new BorderLayout());
+	        panelPrestamos.add(scrollPaneprestamos, BorderLayout.CENTER);
+
+	        // ✅ Aquí se construye el panel principal
+	        setLayout(new BorderLayout());
+	        add(titulo, BorderLayout.NORTH);
+	        add(panelPrestamos, BorderLayout.CENTER);
+	        add(panelPrecio, BorderLayout.SOUTH);
+	    }
 				
 		//El Layout del panel principal es un matriz con 2 filas y 1 columna
-		this.getContentPane().setLayout(new GridLayout(2, 1));
-		this.getContentPane().add(panelprestamos);
-		
-		this.setTitle("Ventana principal de prestamos");		
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
-		this.setSize(800, 600);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);		
-	}
+//		this.getContentPane().setLayout(new GridLayout(2, 1));
+//		this.getContentPane().add(panelprestamos);
+//		
+//		this.setTitle("Ventana principal de prestamos");		
+//		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//
+//		this.setSize(800, 600);
+//		this.setLocationRelativeTo(null);
+//		this.setVisible(true);		
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
@@ -125,10 +96,6 @@ public class GUIDevolverLibro extends JFrame{
 		//Se crea la tabla de prestamos con el modelo de datos
 		this.tablaUsuarios = new JTable(this.modeloUsuarios);
 		
-		
-		
-		
-		
 		TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
 			JLabel result = new JLabel(value.toString());			
 			result.setHorizontalAlignment(JLabel.CENTER);
@@ -141,10 +108,6 @@ public class GUIDevolverLibro extends JFrame{
 			
 			return result;
 		};
-		
-		
-		
-
 		
 		//Se define la altura de las filas de la tabla de prestamos
 		this.tablaUsuarios.setRowHeight(26);

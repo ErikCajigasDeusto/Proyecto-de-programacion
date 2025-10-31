@@ -30,18 +30,18 @@ public class VentanaConsultar extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // 🔹 Crear contenedor de pestañas
+        // Crear contenedor de pestañas
         JTabbedPane pestañas = new JTabbedPane();
 
-        // 🔹 Agregar pestaña "Alquilar libro"
+        // Agregar pestaña "Alquilar libro"
         Ventana_Alquilar panelAlquilar = new Ventana_Alquilar(libros, miembros);
         pestañas.addTab("Alquilar libro", panelAlquilar);
 
-        // 🔹 Agregar pestaña "Devolver libro"
+        // Agregar pestaña "Devolver libro"
         GUIDevolverLibro panelDevolver = new GUIDevolverLibro(prestamos);
         pestañas.addTab("Devolver libro", panelDevolver);
 
-        // 🔹 Añadir pestañas al frame
+        // Añadir pestañas al frame
         add(pestañas, BorderLayout.CENTER);
 
         setVisible(true);

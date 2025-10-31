@@ -84,8 +84,7 @@ public class Main {
         prestamos.add(new Prestamo(8, libros.get(8), luisa, LocalDate.of(2023, 9, 17), 0));
         prestamos.add(new Prestamo(9, libros.get(9), nora, LocalDate.of(2024, 3, 5), 0));
         prestamos.add(new Prestamo(10, libros.get(3), superin, LocalDate.of(2024, 5, 1), 0));
-
-        // INTERFAZ
+        
         SwingUtilities.invokeLater(() -> {new VentanaBiblioteca(libros, miembros, prestamos);
         });
     }
