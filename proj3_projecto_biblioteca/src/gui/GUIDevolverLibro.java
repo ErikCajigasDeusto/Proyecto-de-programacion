@@ -121,30 +121,38 @@ public class GUIDevolverLibro extends JFrame{
 	private void initTables() {
 		//Cabecera del modelo de datos
 		Vector<String> cabeceraprestamos = new Vector<String>(Arrays.asList( "ID","TITULO", "GENERO","AUTOR", "FECHA DEL PRESTAMO"));
-		
-		
+			
 		//Se crea el modelo de datos para la tabla de prestamos sólo con la cabecera
 		/**
 		 * Se pasa un modelo de la base de datos que actua con vectores
 		 */
-		this.modeloUsuarios = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraprestamos);
+		this.modeloUsuarios = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraprestamos) {
+			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+			    return false; 
+			}
+		};
 		//Se crea la tabla de prestamos con el modelo de datos
 		this.tablaPrestamos = new JTable(this.modeloUsuarios);
 		
 		
 		
-		
-		
 		TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
+			if(column==5)
+			{
+				modeloUsuarios.isCellEditable(row, column);
+			}
 			JLabel result = new JLabel(value.toString());			
 			result.setHorizontalAlignment(JLabel.CENTER);
-			
-			
 			result.setBackground(table.getBackground());
 			result.setForeground(table.getForeground());
-			
 			result.setOpaque(true);
-			
 			return result;
 		};
 			
@@ -165,11 +173,9 @@ public class GUIDevolverLibro extends JFrame{
 			//Se obtiene el ID del comic de la fila seleccionada si es distinta de -1
 			if (tablaPrestamos.getSelectedRow() != -1) {
 				
-				
 				seleccionado = (this.prestamos.get((int) tablaPrestamos.getValueAt(tablaPrestamos.getSelectedRow(), 0) - 1)).getLibro();
 				LocalDate actual = LocalDate.now();
 				int dif = (int)(ChronoUnit.DAYS.between((this.prestamos.get((int) tablaPrestamos.getValueAt(tablaPrestamos.getSelectedRow(), 0) - 1)).getFecha_inicial_prestamo(), actual));
-				
 				
 				if(dif>seleccionado.getDuracionPrestamo())
 				{
@@ -180,13 +186,11 @@ public class GUIDevolverLibro extends JFrame{
 				}
 				
 				
-				
 			}
 		});
 		
 		//Se establecen los renderers al la cabecera y el contenido
 		this.tablaPrestamos.getTableHeader().setDefaultRenderer(headerRenderer);		
-		
 		
 
 		
@@ -215,10 +219,9 @@ public class GUIDevolverLibro extends JFrame{
     			}
     		}
     	}
-    	
-    	
         
     }
+    
     
     public void filtrarPrestamos()
     {

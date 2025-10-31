@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class GUIVentanaComprobacion extends JDialog {
@@ -14,7 +15,7 @@ public class GUIVentanaComprobacion extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField campoUsuario;
-    private JTextField campoContra;
+    private JPasswordField campoContra;
     private JButton botonEnviar;
     private GUIDevolverLibro ventana;
     
@@ -25,7 +26,7 @@ public class GUIVentanaComprobacion extends JDialog {
         setLayout(new java.awt.FlowLayout());
 
         campoUsuario = new JTextField(20);
-        campoContra = new JTextField(20);
+        campoContra = new JPasswordField(20);
         botonEnviar = new JButton("Aceptar");
 
         botonEnviar.addActionListener(new ActionListener() {
