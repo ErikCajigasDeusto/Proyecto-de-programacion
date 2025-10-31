@@ -5,13 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
-import domain.Autor;
-import domain.Editorial;
-import domain.Genero;
-import domain.Libro;
-import domain.Miembro;
-import domain.Prestamo;
-import gui.VentanaBiblioteca;
+import  domain.*;
+import gui.*;
 
 public class Main {
 
@@ -49,16 +44,17 @@ public class Main {
 
         // MIEMBROS
         List<Miembro> miembros = new ArrayList<>();
-        Miembro ofelia = new Miembro(1, "Ofelia", "Tonelaje", "91111112");
-        Miembro bacterio = new Miembro(2, "Bacterio", "Fernández", "9862748726");
-        Miembro superin = new Miembro(3, "Super", "Intendente", "919372761");
-        Miembro carlos = new Miembro(4, "Carlos", "Gómez", "911555111");
-        Miembro juan = new Miembro(5, "Juan", "Pérez", "986222333");
-        Miembro martin = new Miembro(6, "Martin", "García", "919444555");
-        Miembro ana = new Miembro(7, "Ana", "Ruiz", "912223344");
-        Miembro luisa = new Miembro(8, "Luisa", "Torres", "988776655");
-        Miembro pedro = new Miembro(9, "Pedro", "Salas", "900123456");
-        Miembro nora = new Miembro(10, "Nora", "Vega", "911987654");
+
+        Miembro ofelia = new Miembro(1,"Ofelia","Tonelaje","123");
+		Miembro bacterio = new Miembro(2,"Bacterio","Tonelaje","234");
+		Miembro superin = new Miembro(3,"Super","Intendente","567");
+		Miembro lola = new Miembro(4,"lola","bunny","432");
+		Miembro rupert = new Miembro(5,"rupert","red","156");
+		Miembro oscar = new Miembro(6,"oscar","olivera","999");
+        Miembro ana = new Miembro(7, "Ana", "Ruiz", "555");
+        Miembro luisa = new Miembro(8, "Luisa", "Torres", "666");
+        Miembro pedro = new Miembro(9, "Pedro", "Salas", "777");
+        Miembro nora = new Miembro(10, "Nora", "Vega", "888");
 
         miembros.add(ofelia);
         miembros.add(bacterio);
@@ -79,7 +75,7 @@ public class Main {
         prestamos.add(new Prestamo(3, libros.get(2), bacterio, LocalDate.of(2023, 5, 12), 0));
         prestamos.add(new Prestamo(4, libros.get(4), juan, LocalDate.of(2024, 6, 10), 0));
         prestamos.add(new Prestamo(5, libros.get(5), ana, LocalDate.of(2023, 11, 2), 0));
-        prestamos.add(new Prestamo(6, libros.get(6), martin, LocalDate.of(2024, 1, 3), 0));
+        prestamos.add(new Prestamo(6, libros.get(6), oscar, LocalDate.of(2024, 1, 3), 0));
         prestamos.add(new Prestamo(7, libros.get(7), pedro, LocalDate.of(2023, 8, 9), 0));
         prestamos.add(new Prestamo(8, libros.get(8), luisa, LocalDate.of(2023, 9, 17), 0));
         prestamos.add(new Prestamo(9, libros.get(9), nora, LocalDate.of(2024, 3, 5), 0));

@@ -131,7 +131,7 @@ public class Libro {
 		this.editorial = editorial;
 	}
 
-	public static int getDuracionPrestamo() {
+	public int getDuracionPrestamo() {
 		return duracionPrestamo;
 	}
 	

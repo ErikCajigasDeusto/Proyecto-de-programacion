@@ -72,7 +72,7 @@ public class VentanaInicioUsuario extends JFrame {
 
                 Miembro encontrado = null;
                 for (Miembro m : miembros) {
-                    if (m.getNombre().equalsIgnoreCase(nombre) && m.getTelefono().equals(telefono)) {
+                    if (m.getNombre().equalsIgnoreCase(nombre) && m.getpassword().equals(telefono)) {
                         encontrado = m;
                         break;
                     }

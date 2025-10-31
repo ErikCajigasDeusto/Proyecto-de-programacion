@@ -38,7 +38,7 @@ public class VentanaConsultar extends JFrame {
         pestañas.addTab("Alquilar libro", panelAlquilar);
 
         // Agregar pestaña "Devolver libro"
-        GUIDevolverLibro panelDevolver = new GUIDevolverLibro(prestamos);
+        GUIDevolverLibro panelDevolver =  new GUIDevolverLibro(prestamos, miembros);
         pestañas.addTab("Devolver libro", panelDevolver);
 
         // Añadir pestañas al frame

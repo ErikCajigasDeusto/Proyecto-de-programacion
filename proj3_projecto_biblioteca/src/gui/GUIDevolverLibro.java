@@ -2,8 +2,12 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
-import java.util.EventObject;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.DefaultCellEditor;
@@ -11,8 +15,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,20 +24,20 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import domain.*;
 
 public class GUIDevolverLibro extends JPanel{
 
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	private List<Prestamo> prestamos;
-	
-	private JTable tablaUsuarios;
+	private List<Miembro> miembros;
+	private JTable tablaPrestamos;
 	private DefaultTableModel modeloUsuarios;
 	
 	private int filaseleccionada = -1;
@@ -42,26 +46,29 @@ public class GUIDevolverLibro extends JPanel{
 	private JScrollPane scrollPanelibros;
 	private JTextField txtvalor;
 	private Libro seleccionado;
+	private JComboBox<String> miembrosBox = new JComboBox<String>();
+	private int idbuscado =-1;
 	
-	public GUIDevolverLibro(List<Prestamo> prestamos) {
-		//Asignamos la lista de prestamos a la varaible local
+	
+	public GUIDevolverLibro(List<Prestamo> prestamos, List<Miembro> miembros) {
+		//Asignamos la lista de prestamos a la variable local
 		this.prestamos = prestamos;
-
+		this.miembros = miembros;
 		//Se inicializan las tablas y sus modelos de datos
 		this.initTables();
 		//Se cargan los prestamos en la tabla de prestamos
-		this.loadprestamos();
+		this.inicializarPrestamos();
 		
 		//La tabla de prestamos se inserta en un panel con scroll
-		JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaUsuarios);
+		JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaPrestamos);
 		scrollPaneprestamos.setBorder(new TitledBorder(""));
-		this.tablaUsuarios.setFillsViewportHeight(true);
+		this.tablaPrestamos.setFillsViewportHeight(true);
 		
 		
-//		//La tabla de personajes se inserta en otro panel con scroll
-		this.scrollPanelibros = new JScrollPane(this.tablaLibros);
-		this.scrollPanelibros.setBorder(new TitledBorder("Personajes"));		
-//		this.tablaLibros.setFillsViewportHeight(true);
+		for(Miembro actual : miembros)
+		{
+			miembrosBox.addItem(actual.getNombreApellido());;
+		}
 		
 				
 		//Consiste en el titulo del texto
@@ -72,14 +79,28 @@ public class GUIDevolverLibro extends JPanel{
 		
 		//añadir los JButton del final
 		JButton pagar = new JButton("Pagar");
-		JButton cancelar = new JButton("Cancelar");
+		JButton buscar = new JButton("Buscar");
+		
+		
+		
+		buscar.addActionListener(new ActionListener() {
+            @Override
+            
+            public void actionPerformed(ActionEvent e) {
+            	
+                // Crear y mostrar la ventana hija, pasándose a sí misma como referencia
+                GUIVentanaComprobacion hija = new GUIVentanaComprobacion(GUIDevolverLibro.this);
+                hija.setVisible(true);
+            }
+        });
 		
 		this.txtvalor = new JTextField(20);		
 		JPanel panelPrecio = new JPanel();
+		panelPrecio.add(miembrosBox);
+		panelPrecio.add(buscar);	
 		panelPrecio.add(new JLabel("Precio a pagar: "));
 		panelPrecio.add(txtvalor);
 		panelPrecio.add(pagar);
-		panelPrecio.add(cancelar);
 		
 		
 
@@ -88,6 +109,9 @@ public class GUIDevolverLibro extends JPanel{
 		panelprestamos.add(BorderLayout.CENTER, scrollPaneprestamos);
 		panelprestamos.add(BorderLayout.NORTH, titulo);
 		panelprestamos.add(BorderLayout.SOUTH,panelPrecio);
+		
+		
+	}
 				
 		//El Layout del panel principal es un matriz con 2 filas y 1 columna
 //		this.getContentPane().setLayout(new GridLayout(2, 1));
@@ -98,101 +122,131 @@ public class GUIDevolverLibro extends JPanel{
 //
 //		this.setSize(800, 600);
 //		this.setLocationRelativeTo(null);
-//		this.setVisible(true);		
+				
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
 		Vector<String> cabeceraprestamos = new Vector<String>(Arrays.asList( "ID","TITULO", "GENERO","AUTOR", "FECHA DEL PRESTAMO"));
-		
-		
+			
 		//Se crea el modelo de datos para la tabla de prestamos sólo con la cabecera
 		/**
 		 * Se pasa un modelo de la base de datos que actua con vectores
 		 */
-		this.modeloUsuarios = new DefaultTableModel(new Vector<Vector<Object>>(), cabeceraprestamos);
+		this.modeloUsuarios = new DefaultTableModel(new Vector<>(), cabeceraprestamos) {
+			
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+			    return false; 
+			}
+		};
 		//Se crea la tabla de prestamos con el modelo de datos
-		this.tablaUsuarios = new JTable(this.modeloUsuarios);
+		this.tablaPrestamos = new JTable(this.modeloUsuarios);
 		
 		TableCellRenderer headerRenderer = (table, value, isSelected, hasFocus, row, column) -> {
+			if(column==5)
+			{
+				modeloUsuarios.isCellEditable(row, column);
+			}
 			JLabel result = new JLabel(value.toString());			
 			result.setHorizontalAlignment(JLabel.CENTER);
-			
-			
 			result.setBackground(table.getBackground());
 			result.setForeground(table.getForeground());
-			
 			result.setOpaque(true);
-			
 			return result;
 		};
-		
 		//Se define la altura de las filas de la tabla de prestamos
-		this.tablaUsuarios.setRowHeight(26);
+		this.tablaPrestamos.setRowHeight(26);
 		
 		//Se deshabilita la reordenación de columnas
-		this.tablaUsuarios.getTableHeader().setReorderingAllowed(false);
+		this.tablaPrestamos.getTableHeader().setReorderingAllowed(false);
 		//Se deshabilita el redimensionado de las columna
-		this.tablaUsuarios.getTableHeader().setResizingAllowed(false);
+		this.tablaPrestamos.getTableHeader().setResizingAllowed(false);
 		//Se definen criterios de ordenación por defecto para cada columna
-		this.tablaUsuarios.setAutoCreateRowSorter(true);
+		this.tablaPrestamos.setAutoCreateRowSorter(true);
 		
 		//hace que solo se puede seleccionar una fila
-		this.tablaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.tablaPrestamos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		this.tablaUsuarios.getSelectionModel().addListSelectionListener(e -> {
+		this.tablaPrestamos.getSelectionModel().addListSelectionListener(e -> {
 			//Se obtiene el ID del comic de la fila seleccionada si es distinta de -1
-			if (tablaUsuarios.getSelectedRow() != -1) {
-				seleccionado = (this.prestamos.get((int) tablaUsuarios.getValueAt(tablaUsuarios.getSelectedRow(), 0) - 1)).getLibro();
-				txtvalor.setText(String.valueOf(seleccionado.getPrecio()));
+			if (tablaPrestamos.getSelectedRow() != -1) {
+				
+				seleccionado = (this.prestamos.get((int) tablaPrestamos.getValueAt(tablaPrestamos.getSelectedRow(), 0) - 1)).getLibro();
+				LocalDate actual = LocalDate.now();
+				int dif = (int)(ChronoUnit.DAYS.between((this.prestamos.get((int) tablaPrestamos.getValueAt(tablaPrestamos.getSelectedRow(), 0) - 1)).getFecha_inicial_prestamo(), actual));
+				
+				if(dif>seleccionado.getDuracionPrestamo())
+				{
+					txtvalor.setText(String.valueOf(seleccionado.getPrecio()*1.5));
+				}else
+				{
+					txtvalor.setText(String.valueOf(seleccionado.getPrecio()));
+				}
+				
 				
 			}
 		});
 		
 		//Se establecen los renderers al la cabecera y el contenido
-		this.tablaUsuarios.getTableHeader().setDefaultRenderer(headerRenderer);		
-		
+		this.tablaPrestamos.getTableHeader().setDefaultRenderer(headerRenderer);		
 		
 
 		
 	}
 		
-	private void loadprestamos() {
+	private void inicializarPrestamos() {
 		//Se borran los datos del modelo de datos
 		this.modeloUsuarios.setRowCount(0);
-		//Se añaden los prestamos uno a uno al modelo de datosd
-		this.prestamos.forEach(c -> this.modeloUsuarios.addRow(
-				new Object[] {c.getId(), c.getLibro().getTitulo(),
-						c.getLibro().getGenero().name(),
-						c.getLibro().getAutor().getNombreApellido(),
-						c.getFecha_inicial_prestamo()} )
-		);
 	}
 	
-	
-	private void comparadorDepassword()
-	{
-		String entradaUsuario = JOptionPane.showInputDialog(null, "Escribe un texto:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
 
-        // Verificar si el usuario pulsó "Cancelar" o cerró la ventana
-        if (entradaUsuario == null) {
-            JOptionPane.showMessageDialog(null, "Operación cancelada por el usuario.", "Información", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        // Definir el texto con el que se realizará la comparación
-        String textoComparar = "Hola Mundo";
-
-        // Comparar el texto ingresado con el texto definido
-        if (entradaUsuario.equals(textoComparar)) {
-            JOptionPane.showMessageDialog(null, "¡El texto coincide!", "Resultado", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "El texto no coincide.", "Resultado", JOptionPane.WARNING_MESSAGE);
-        }
-	}
-	
-	private void comparadorDOstextareas()
-	{
-		
-	}
+    public void recibirTexto(String usuario, String contra) {
+    	
+    	if(miembrosBox.getSelectedIndex()!=-1)
+    	{
+    		for(Miembro miembro: miembros)
+    		{
+    			if(miembro.getNombre().equals(usuario) && miembro.getpassword().equals(contra))
+    			{
+    				idbuscado= miembro.getId();
+    				filtrarPrestamos();
+    				return;
+    			}else
+    			{
+    				inicializarPrestamos();
+    			}
+    		}
+    	}
+        
+    }
+    
+    
+    public void filtrarPrestamos()
+    {
+    	this.modeloUsuarios.setRowCount(0);
+    	
+    	if(miembrosBox.getSelectedIndex()!=-1)
+    	{
+   
+    		for( Prestamo prestamo: prestamos)
+    		{
+    			
+    			if(miembrosBox.getSelectedItem().toString().equals(prestamo.getMiembro().getNombreApellido() )
+    					&& (idbuscado == prestamo.getMiembro().getId()) )
+    					{
+    						this.modeloUsuarios.addRow(new Object[] {prestamo.getId(), prestamo.getLibro().getTitulo(),
+    								prestamo.getLibro().getGenero().name(),
+    								prestamo.getLibro().getAutor().getNombreApellido(),
+    								prestamo.getFecha_inicial_prestamo()});
+    					}
+    		}
+    	}
+    	
+    }
 	
 }

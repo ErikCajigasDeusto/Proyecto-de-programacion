@@ -133,16 +133,18 @@ public class Ventana_Alquilar extends JPanel {
 	// ---------- MÉTODOS ----------
 	private void iniciarSesion() {
 		boolean igual = false;
-		while (!igual) {
-			String username = JOptionPane.showInputDialog(null, "Escribe tu nombre:", "Inicio de sesión", JOptionPane.QUESTION_MESSAGE);
-			String telefono = JOptionPane.showInputDialog(null, "Escribe tu teléfono:", "Inicio de sesión", JOptionPane.QUESTION_MESSAGE);
-			if ((username != null) && (telefono != null)) {
-				for (Miembro miembro : miembros) {
-					if (username.equalsIgnoreCase(miembro.getNombre()) && telefono.equals(miembro.getTelefono())) {
-						igual = true;
-						alquilar(miembro);
-						JOptionPane.showMessageDialog(this, "Libro alquilado correctamente");
-						break;
+		
+		while(!igual) {
+			String username = JOptionPane.showInputDialog(null, "Escribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+			String password = JOptionPane.showInputDialog(null, "Escribe tu telefono:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+			if((username!=null)&&(password!=null)) {
+				for(Miembro miembro:miembros) {
+					if(username.equals(miembro.getNombre())) {
+						if(password.equals(miembro.getpassword())) {
+							igual = true;
+							alquilar(miembro);
+							break;
+						}
 					}
 				}
 			}
@@ -219,12 +221,37 @@ public class Ventana_Alquilar extends JPanel {
 			return result;
 		};
 
-		this.TablalibrosDisponibles.getTableHeader().setDefaultRenderer((table, value, isSelected, hasFocus, row, column) -> {
-			JLabel label = new JLabel(value.toString());
-			label.setOpaque(true);
-			label.setBackground(new Color(255, 255, 255));
-			label.setHorizontalAlignment(JLabel.LEFT);
-			return label;
+		this.TablalibrosDisponibles.setDefaultRenderer(Object.class, cellRenderer);
+		this.TablalibrosDisponibles.getTableHeader().setDefaultRenderer( new TableCellRenderer() 
+				{
+
+					@Override
+					public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+							boolean hasFocus, int row, int column) {
+						JLabel label = new JLabel(value.toString());
+						label.setOpaque(true);
+						label.setBackground(new Color(255, 255, 255));
+						label.setHorizontalAlignment(JLabel.LEFT);
+						return label;
+					}
+			
+				}
+			
+			
+	
+	);
+		TablalibrosDisponibles.setDefaultRenderer(Object.class, cellRenderer);
+		TablalibrosDisponibles.getTableHeader().setDefaultRenderer(new TableCellRenderer(){
+			
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+				JLabel label = new JLabel(value.toString());
+				label.setOpaque(true);
+				label.setBackground(new Color(255, 255, 255));
+				label.setHorizontalAlignment(JLabel.LEFT);
+				return label;
+			}
+
 		});
 
 		this.TablalibrosDisponibles.setDefaultRenderer(Object.class, cellRenderer);

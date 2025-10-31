@@ -5,7 +5,7 @@ public class Miembro{
 	private int id;
 	private String nombre;
 	private String apellido;
-	private String telefono;
+	private String password;
 	private Membresia membresia;
 	
 	
@@ -15,14 +15,14 @@ public class Miembro{
 	 * @param nombre
 	 * @param apellido
 	 * @param membresia
-	 * @param telefono
+	 * @param password
 	 */
-	public Miembro(int id, String nombre, String apellido,String telefono) {
+	public Miembro(int id, String nombre, String apellido,String password) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.telefono = telefono;
+		this.password = password;
 		this.membresia = new Membresia();
 	}
 	
@@ -30,15 +30,15 @@ public class Miembro{
 	 * @param id
 	 * @param nombre
 	 * @param apellido
-	 * @param telefono
+	 * @param password
 	 * @param membresia
 	 */
-	public Miembro(int id, String nombre, String apellido,String telefono, Membresia membresia) {
+	public Miembro(int id, String nombre, String apellido,String password, Membresia membresia) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.telefono = telefono;
+		this.password = password;
 		this.membresia = membresia;
 	}
 
@@ -84,21 +84,23 @@ public class Miembro{
 		this.apellido = apellido;
 	}
 	
-	
+	public String getNombreApellido() {
+		return nombre+" "+apellido;
+	}
 	
 	
 	/**
-	 * @return the telefono
+	 * @return the password
 	 */
-	public String getTelefono() {
-		return telefono;
+	public String getpassword() {
+		return password;
 	}
 
 	/**
-	 * @param telefono the telefono to set
+	 * @param password the password to set
 	 */
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
+	public void setpassword(String password) {
+		this.password = password;
 	}
 
 	/**
@@ -117,8 +119,8 @@ public class Miembro{
 
 	@Override
 	public String toString() {
-		return String.format("Miembro [id=%s, nombre=%s, apellido=%s, telefono=%s, membresia=%s]", id, nombre, apellido,
-				telefono, membresia);
+		return String.format("Miembro [id=%s, nombre=%s, apellido=%s, password=%s, membresia=%s]", id, nombre, apellido,
+				password, membresia);
 	}
 	
 	
