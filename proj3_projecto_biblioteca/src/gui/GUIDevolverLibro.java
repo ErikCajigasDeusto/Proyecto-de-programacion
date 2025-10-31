@@ -53,7 +53,7 @@ public class GUIDevolverLibro extends JFrame{
 		//Se inicializan las tablas y sus modelos de datos
 		this.initTables();
 		//Se cargan los prestamos en la tabla de prestamos
-		this.loadprestamos();
+		this.inicializarPrestamos();
 		
 		//La tabla de prestamos se inserta en un panel con scroll
 		JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaPrestamos);
@@ -192,16 +192,9 @@ public class GUIDevolverLibro extends JFrame{
 		
 	}
 		
-	private void loadprestamos() {
+	private void inicializarPrestamos() {
 		//Se borran los datos del modelo de datos
 		this.modeloUsuarios.setRowCount(0);
-		//Se añaden los prestamos uno a uno al modelo de datosd
-		this.prestamos.forEach(c -> this.modeloUsuarios.addRow(
-				new Object[] {c.getId(), c.getLibro().getTitulo(),
-						c.getLibro().getGenero().name(),
-						c.getLibro().getAutor().getNombreApellido(),
-						c.getFecha_inicial_prestamo()} )
-		);
 	}
 	
 
@@ -216,6 +209,9 @@ public class GUIDevolverLibro extends JFrame{
     				idbuscado= miembro.getId();
     				filtrarPrestamos();
     				return;
+    			}else
+    			{
+    				inicializarPrestamos();
     			}
     		}
     	}
