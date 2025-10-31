@@ -1,6 +1,8 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -40,10 +42,6 @@ public class GUIDevolverLibro extends JPanel{
 	private JTable tablaPrestamos;
 	private DefaultTableModel modeloUsuarios;
 	
-	private int filaseleccionada = -1;
-	private DefaultTableModel modeloLibros;
-	private JTable tablaLibros;
-	private JScrollPane scrollPanelibros;
 	private JTextField txtvalor;
 	private Libro seleccionado;
 	private JComboBox<String> miembrosBox = new JComboBox<String>();
@@ -52,64 +50,77 @@ public class GUIDevolverLibro extends JPanel{
 	
 	public GUIDevolverLibro(List<Prestamo> prestamos, List<Miembro> miembros) {
 		//Asignamos la lista de prestamos a la variable local
-		this.prestamos = prestamos;
-		this.miembros = miembros;
-		//Se inicializan las tablas y sus modelos de datos
-		this.initTables();
-		//Se cargan los prestamos en la tabla de prestamos
-		this.inicializarPrestamos();
-		
-		//La tabla de prestamos se inserta en un panel con scroll
-		JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaPrestamos);
-		scrollPaneprestamos.setBorder(new TitledBorder(""));
-		this.tablaPrestamos.setFillsViewportHeight(true);
-		
-		
-		for(Miembro actual : miembros)
-		{
-			miembrosBox.addItem(actual.getNombreApellido());;
-		}
-		
-				
-		//Consiste en el titulo del texto
-		JLabel titulo = new JLabel("Devolución de prestamos", SwingConstants.CENTER);
-		titulo.setHorizontalAlignment(SwingConstants.CENTER);
-		titulo.setVerticalAlignment(SwingConstants.NORTH);
-		titulo.setFont(new Font(titulo.getFont().getName(), titulo.getFont().getStyle(), 30));
-		
-		//añadir los JButton del final
-		JButton pagar = new JButton("Pagar");
-		JButton buscar = new JButton("Buscar");
-		
-		
-		
-		buscar.addActionListener(new ActionListener() {
-            @Override
-            
-            public void actionPerformed(ActionEvent e) {
-            	
-                // Crear y mostrar la ventana hija, pasándose a sí misma como referencia
-                GUIVentanaComprobacion hija = new GUIVentanaComprobacion(GUIDevolverLibro.this);
-                hija.setVisible(true);
-            }
-        });
-		
-		this.txtvalor = new JTextField(20);		
-		JPanel panelPrecio = new JPanel();
-		panelPrecio.add(miembrosBox);
-		panelPrecio.add(buscar);	
-		panelPrecio.add(new JLabel("Precio a pagar: "));
-		panelPrecio.add(txtvalor);
-		panelPrecio.add(pagar);
-		
-		
+				this.prestamos = prestamos;
+				this.miembros = miembros;
+				setLayout(new BorderLayout(10, 10));
+				setBackground(Color.WHITE);
 
-		JPanel panelprestamos = new JPanel();
-		panelprestamos.setLayout(new BorderLayout());
-		panelprestamos.add(BorderLayout.CENTER, scrollPaneprestamos);
-		panelprestamos.add(BorderLayout.NORTH, titulo);
-		panelprestamos.add(BorderLayout.SOUTH,panelPrecio);
-		
+				// ---------- PANEL BUSCADOR ----------
+				JPanel panelBuscador = new JPanel();
+				panelBuscador.setPreferredSize(new Dimension(800, 600));
+				
+				//Se inicializan las tablas y sus modelos de datos
+				this.initTables();
+				//Se cargan los prestamos en la tabla de prestamos
+				this.inicializarPrestamos();
+				
+				//La tabla de prestamos se inserta en un panel con scroll
+				JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaPrestamos);
+				scrollPaneprestamos.setBorder(new TitledBorder(""));
+				this.tablaPrestamos.setFillsViewportHeight(true);
+				
+				
+				for(Miembro actual : miembros)
+				{
+					miembrosBox.addItem(actual.getNombreApellido());;
+				}
+				
+						
+				//Consiste en el titulo del texto
+				JLabel titulo = new JLabel("Devolución de prestamos", SwingConstants.CENTER);
+				titulo.setHorizontalAlignment(SwingConstants.CENTER);
+				titulo.setVerticalAlignment(SwingConstants.NORTH);
+				titulo.setFont(new Font(titulo.getFont().getName(), titulo.getFont().getStyle(), 30));
+				
+				//añadir los JButton del final
+				JButton pagar = new JButton("Pagar");
+				JButton buscar = new JButton("Buscar");
+				
+				
+				
+				buscar.addActionListener(new ActionListener() {
+		            @Override
+		            
+		            public void actionPerformed(ActionEvent e) {
+		            	
+		                // Crear y mostrar la ventana hija, pasándose a sí misma como referencia
+		                GUIVentanaComprobacion hija = new GUIVentanaComprobacion(GUIDevolverLibro.this);
+		                hija.setVisible(true);
+		            }
+		        });
+				
+				this.txtvalor = new JTextField(20);		
+				JPanel panelPrecio = new JPanel();
+				panelPrecio.add(miembrosBox);
+				panelPrecio.add(buscar);	
+				panelPrecio.add(new JLabel("Precio a pagar: "));
+				panelPrecio.add(txtvalor);
+				panelPrecio.add(pagar);
+				
+				
+
+				panelBuscador.setLayout(new BorderLayout());
+				panelBuscador.add(BorderLayout.CENTER, scrollPaneprestamos);
+				panelBuscador.add(BorderLayout.NORTH, titulo);
+				panelBuscador.add(BorderLayout.SOUTH,panelPrecio);
+				panelBuscador.setSize(800, 600);		
+				
+
+				add(panelBuscador);
+
+				this.setSize(800, 600);
+
+				this.setVisible(true);		
 		
 	}
 				
