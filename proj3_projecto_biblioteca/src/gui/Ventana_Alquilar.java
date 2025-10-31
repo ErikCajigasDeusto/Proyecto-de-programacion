@@ -71,7 +71,6 @@ public class Ventana_Alquilar extends JPanel {
 			generoBox.addItem(genero);
 		}
 		generoBox.setEditable(false);
-
 		panelBuscador.add(tituloBuscar);
 		panelBuscador.add(tituloTexto);
 		panelBuscador.add(generoBuscar);
@@ -235,13 +234,7 @@ public class Ventana_Alquilar extends JPanel {
 
 		this.TablalibrosDisponibles.getSelectionModel().addListSelectionListener(e -> {
 			if (TablalibrosDisponibles.getSelectedRow() != -1) {
-				int idLibro = (int) TablalibrosDisponibles.getValueAt(TablalibrosDisponibles.getSelectedRow(), 0);
-				for (Libro libro : libros) {
-					if (libro.getId_libro() == idLibro) {
-						seleccionado = libro;
-						break;
-					}
-				}
+				seleccionado = this.libros.get((int)TablalibrosDisponibles.getValueAt(TablalibrosDisponibles.getSelectedRow(), 0)-1);				
 			}
 		});
 	}

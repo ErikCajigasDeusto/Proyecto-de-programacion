@@ -3,9 +3,14 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.util.Arrays;
+import java.util.EventObject;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,7 +20,11 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import domain.*;
 
@@ -34,43 +43,51 @@ public class GUIDevolverLibro extends JPanel{
 	private JTextField txtvalor;
 	private Libro seleccionado;
 	
-	 public GUIDevolverLibro(List<Prestamo> prestamos) {
-	        this.prestamos = prestamos;
+	public GUIDevolverLibro(List<Prestamo> prestamos) {
+		//Asignamos la lista de prestamos a la varaible local
+		this.prestamos = prestamos;
 
-	        // Inicializar tablas
-	        this.initTables();
-	        this.loadprestamos();
+		//Se inicializan las tablas y sus modelos de datos
+		this.initTables();
+		//Se cargan los prestamos en la tabla de prestamos
+		this.loadprestamos();
+		
+		//La tabla de prestamos se inserta en un panel con scroll
+		JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaUsuarios);
+		scrollPaneprestamos.setBorder(new TitledBorder(""));
+		this.tablaUsuarios.setFillsViewportHeight(true);
+		
+		
+//		//La tabla de personajes se inserta en otro panel con scroll
+		this.scrollPanelibros = new JScrollPane(this.tablaLibros);
+		this.scrollPanelibros.setBorder(new TitledBorder("Personajes"));		
+//		this.tablaLibros.setFillsViewportHeight(true);
+		
+				
+		//Consiste en el titulo del texto
+		JLabel titulo = new JLabel("Devolución de prestamos", SwingConstants.CENTER);
+		titulo.setHorizontalAlignment(SwingConstants.CENTER);
+		titulo.setVerticalAlignment(SwingConstants.NORTH);
+		titulo.setFont(new Font(titulo.getFont().getName(), titulo.getFont().getStyle(), 30));
+		
+		//añadir los JButton del final
+		JButton pagar = new JButton("Pagar");
+		JButton cancelar = new JButton("Cancelar");
+		
+		this.txtvalor = new JTextField(20);		
+		JPanel panelPrecio = new JPanel();
+		panelPrecio.add(new JLabel("Precio a pagar: "));
+		panelPrecio.add(txtvalor);
+		panelPrecio.add(pagar);
+		panelPrecio.add(cancelar);
+		
+		
 
-	        // Scroll principal para la tabla de préstamos
-	        JScrollPane scrollPaneprestamos = new JScrollPane(this.tablaUsuarios);
-	        scrollPaneprestamos.setBorder(new TitledBorder("Listado de préstamos"));
-	        this.tablaUsuarios.setFillsViewportHeight(true);
-
-	        // Etiqueta de título
-	        JLabel titulo = new JLabel("Devolución de préstamos", SwingConstants.CENTER);
-	        titulo.setFont(new Font("Arial", Font.BOLD, 24));
-
-	        // Panel inferior con botones
-	        JButton pagar = new JButton("Pagar");
-	        JButton cancelar = new JButton("Cancelar");
-	        this.txtvalor = new JTextField(10);
-
-	        JPanel panelPrecio = new JPanel();
-	        panelPrecio.add(new JLabel("Precio a pagar:"));
-	        panelPrecio.add(txtvalor);
-	        panelPrecio.add(pagar);
-	        panelPrecio.add(cancelar);
-
-	        // Panel intermedio con la tabla
-	        JPanel panelPrestamos = new JPanel(new BorderLayout());
-	        panelPrestamos.add(scrollPaneprestamos, BorderLayout.CENTER);
-
-	        // ✅ Aquí se construye el panel principal
-	        setLayout(new BorderLayout());
-	        add(titulo, BorderLayout.NORTH);
-	        add(panelPrestamos, BorderLayout.CENTER);
-	        add(panelPrecio, BorderLayout.SOUTH);
-	    }
+		JPanel panelprestamos = new JPanel();
+		panelprestamos.setLayout(new BorderLayout());
+		panelprestamos.add(BorderLayout.CENTER, scrollPaneprestamos);
+		panelprestamos.add(BorderLayout.NORTH, titulo);
+		panelprestamos.add(BorderLayout.SOUTH,panelPrecio);
 				
 		//El Layout del panel principal es un matriz con 2 filas y 1 columna
 //		this.getContentPane().setLayout(new GridLayout(2, 1));
