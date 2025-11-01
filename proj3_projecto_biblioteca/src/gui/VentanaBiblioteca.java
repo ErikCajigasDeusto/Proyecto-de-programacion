@@ -84,10 +84,11 @@ public class VentanaBiblioteca extends JFrame {
         add(panelBotones, BorderLayout.SOUTH);
 
         // Lambdas para acciones de los botones
-        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario());
+        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario(miembros));
         botonMiembro.addActionListener(e -> new VentanaInicioUsuario(libros, miembros, prestamos));
 
         setVisible(true);
     }
+    	
 }
 
