@@ -12,11 +12,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import domain.Miembro;
 
-public class VentanaBiblioteca2 extends JFrame{
-private static final long serialVersionUID=1L;
+public class VentanaSeleccion extends JFrame{
+private static final long serialVersionUID=1L; 
 
 
-public VentanaBiblioteca2() {
+public VentanaSeleccion() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setTitle("Biblioteca");
 	setSize(500,350);
@@ -42,7 +42,7 @@ public VentanaBiblioteca2() {
 }
 
 	public static void main(String[] args) {
-		VentanaBiblioteca2 ventana=new VentanaBiblioteca2();
+		VentanaSeleccion ventana=new VentanaSeleccion();
 		ventana.setVisible(true);
 
 	}

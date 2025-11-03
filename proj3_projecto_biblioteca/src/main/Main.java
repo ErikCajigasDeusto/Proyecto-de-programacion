@@ -78,7 +78,7 @@ public class Main {
         prestamos.add(new Prestamo(10, libros.get(3), superin, LocalDate.of(2024, 5, 1), 0));
 
         // INTERFAZ
-        SwingUtilities.invokeLater(() -> {new VentanaBiblioteca(libros, miembros, prestamos);
+        SwingUtilities.invokeLater(() -> {new VentanaPrincipal(libros, miembros, prestamos);
         });
     }
 }
