@@ -25,7 +25,7 @@ public class VentanaConsultar extends JFrame {
         this.miembroActual = miembroActual;
 
         setTitle("Panel de usuario: " + miembroActual.getNombre());
-        setSize(600, 400);
+        setSize(800, 400);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());

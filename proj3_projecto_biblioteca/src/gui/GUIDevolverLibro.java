@@ -57,7 +57,7 @@ public class GUIDevolverLibro extends JPanel{
 
 				// ---------- PANEL BUSCADOR ----------
 				JPanel panelBuscador = new JPanel();
-				panelBuscador.setPreferredSize(new Dimension(800, 600));
+				panelBuscador.setPreferredSize(new Dimension(800, 650));
 				
 				//Se inicializan las tablas y sus modelos de datos
 				this.initTables();
@@ -113,12 +113,12 @@ public class GUIDevolverLibro extends JPanel{
 				panelBuscador.add(BorderLayout.CENTER, scrollPaneprestamos);
 				panelBuscador.add(BorderLayout.NORTH, titulo);
 				panelBuscador.add(BorderLayout.SOUTH,panelPrecio);
-				panelBuscador.setSize(800, 600);		
+				panelBuscador.setSize(800, 650);		
 				
 
 				add(panelBuscador);
 
-				this.setSize(800, 600);
+				this.setSize(800, 650);
 
 				this.setVisible(true);		
 		
