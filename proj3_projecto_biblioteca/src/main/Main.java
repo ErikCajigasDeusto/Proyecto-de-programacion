@@ -59,9 +59,8 @@ public class Main {
         miembros.add(ofelia);
         miembros.add(bacterio);
         miembros.add(superin);
-        miembros.add(carlos);
-        miembros.add(juan);
-        miembros.add(martin);
+        miembros.add(lola);
+        miembros.add(rupert);
         miembros.add(ana);
         miembros.add(luisa);
         miembros.add(pedro);
@@ -73,7 +72,7 @@ public class Main {
         prestamos.add(new Prestamo(1, libros.get(0), ofelia, LocalDate.of(2023, 10, 21), 0));
         prestamos.add(new Prestamo(2, libros.get(1), ofelia, LocalDate.of(2024, 2, 15), 0));
         prestamos.add(new Prestamo(3, libros.get(2), bacterio, LocalDate.of(2023, 5, 12), 0));
-        prestamos.add(new Prestamo(4, libros.get(4), juan, LocalDate.of(2024, 6, 10), 0));
+//        prestamos.add(new Prestamo(4, libros.get(4), juan, LocalDate.of(2024, 6, 10), 0));
         prestamos.add(new Prestamo(5, libros.get(5), ana, LocalDate.of(2023, 11, 2), 0));
         prestamos.add(new Prestamo(6, libros.get(6), oscar, LocalDate.of(2024, 1, 3), 0));
         prestamos.add(new Prestamo(7, libros.get(7), pedro, LocalDate.of(2023, 8, 9), 0));
