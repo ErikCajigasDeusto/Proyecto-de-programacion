@@ -2,20 +2,25 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import domain.Miembro;
 
-public class VentanaBiblioteca2 extends JFrame{
-private static final long serialVersionUID=1L;
+public class VentanaSeleccion extends JFrame{
+private static final long serialVersionUID=1L; 
 
-public VentanaBiblioteca2() {
+
+public VentanaSeleccion() {
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	setTitle("Biblioteca");
 	setSize(500,350);
+	setLocationRelativeTo(null);
 	
 	//Panel Biblioteca
 	JPanel panelBiblio=new JPanel();
@@ -23,7 +28,7 @@ public VentanaBiblioteca2() {
 	JLabel titulo=new JLabel("Biblioteca");
 	titulo.setFont(new Font("Arial",Font.BOLD,30));
 	panelBiblio.add(titulo);
-	add(panelBiblio,BorderLayout.NORTH);
+	add(panelBiblio,BorderLayout.CENTER);
 	
 	//Panel Botones
 	JPanel panelBotones=new JPanel();
@@ -37,7 +42,7 @@ public VentanaBiblioteca2() {
 }
 
 	public static void main(String[] args) {
-		VentanaBiblioteca2 ventana=new VentanaBiblioteca2();
+		VentanaSeleccion ventana=new VentanaSeleccion();
 		ventana.setVisible(true);
 
 	}

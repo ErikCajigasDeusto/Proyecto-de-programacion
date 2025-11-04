@@ -4,7 +4,7 @@ public class Miembro{
 	
 	private int id;
 	private String nombre;
-	private String apellido;
+	private String apellido; 
 	private String password;
 	private Membresia membresia;
 	

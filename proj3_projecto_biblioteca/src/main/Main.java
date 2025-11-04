@@ -72,7 +72,6 @@ public class Main {
         prestamos.add(new Prestamo(1, libros.get(0), ofelia, LocalDate.of(2023, 10, 21), 0));
         prestamos.add(new Prestamo(2, libros.get(1), ofelia, LocalDate.of(2024, 2, 15), 0));
         prestamos.add(new Prestamo(3, libros.get(2), bacterio, LocalDate.of(2023, 5, 12), 0));
-//        prestamos.add(new Prestamo(4, libros.get(4), juan, LocalDate.of(2024, 6, 10), 0));
         prestamos.add(new Prestamo(5, libros.get(5), ana, LocalDate.of(2023, 11, 2), 0));
         prestamos.add(new Prestamo(6, libros.get(6), oscar, LocalDate.of(2024, 1, 3), 0));
         prestamos.add(new Prestamo(7, libros.get(7), pedro, LocalDate.of(2023, 8, 9), 0));
@@ -81,7 +80,7 @@ public class Main {
         prestamos.add(new Prestamo(10, libros.get(3), superin, LocalDate.of(2024, 5, 1), 0));
 
         // INTERFAZ
-        SwingUtilities.invokeLater(() -> {new VentanaBiblioteca(libros, miembros, prestamos);
+        SwingUtilities.invokeLater(() -> {new VentanaPrincipal(libros, miembros, prestamos);
         });
     }
 }

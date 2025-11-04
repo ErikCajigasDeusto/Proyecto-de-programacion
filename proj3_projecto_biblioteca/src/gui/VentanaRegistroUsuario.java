@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,9 +16,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import domain.Miembro;
+
 public class VentanaRegistroUsuario extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    private List<Miembro>miembros;
+
 
     private JTextField campo_nombreUsuario;
     private JTextField campo_contraseña;
@@ -29,7 +34,9 @@ public class VentanaRegistroUsuario extends JFrame {
     private JButton botonOk;
     private JButton botonCancelar;
 
-    public VentanaRegistroUsuario() {
+    public VentanaRegistroUsuario(List<Miembro> miembros) {
+        this.miembros = miembros;
+    
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Biblioteca");
         setSize(400, 250);
@@ -104,11 +111,33 @@ public class VentanaRegistroUsuario extends JFrame {
 				    }
 				}
         });
+        //Boton Ok para añadir el usuario a la lista
+        botonOk.addActionListener(e->{
+        	String nombre= campo_nombreUsuario.getText();
+        	String contraseña=campo_contraseña.getText().trim();
+        	String confirmar=campo_confirmar_contraseña.getText();
+        	  
+        	boolean existe = false; //nos dice si el usuario esta
+        	    for (Miembro m : miembros) {
+        	        if (m.getNombre().equalsIgnoreCase(nombre)) {//comparamos
+        	            existe = true; //si existe salimos del bucle
+        	            break;
+        	        }
+        	    }
 
+        	    if (existe) {
+        	        JOptionPane.showMessageDialog(this, "El usuario ya existe"); //si ya fue registrado
+        	    } else {
+        	        int IdUsuario = miembros.size() + 1;
+        	        Miembro nuevo = new Miembro(IdUsuario, nombre, "apellido", contraseña);
+        	        miembros.add(nuevo);
+        	        JOptionPane.showMessageDialog(this, "Usuario registrado");//nuevo usuario registrado
+        	        dispose(); 
+        	    }
+        	});
+        	
+        	
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new VentanaRegistroUsuario();
+    
     }
 }

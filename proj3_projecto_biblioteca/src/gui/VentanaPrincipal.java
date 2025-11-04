@@ -17,7 +17,7 @@ import domain.Libro;
 import domain.Miembro;
 import domain.Prestamo;
 
-public class VentanaBiblioteca extends JFrame {
+public class VentanaPrincipal extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public class VentanaBiblioteca extends JFrame {
     private List<Miembro> miembros;
     private List<Prestamo> prestamos;
 
-    public VentanaBiblioteca(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos) {
+    public VentanaPrincipal(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos) {
         this.libros = libros;
         this.miembros = miembros;
         this.prestamos = prestamos;
@@ -84,10 +84,11 @@ public class VentanaBiblioteca extends JFrame {
         add(panelBotones, BorderLayout.SOUTH);
 
         // Lambdas para acciones de los botones
-        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario());
+        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario(miembros));
         botonMiembro.addActionListener(e -> new VentanaInicioUsuario(libros, miembros, prestamos));
 
         setVisible(true);
     }
+    	
 }
 
