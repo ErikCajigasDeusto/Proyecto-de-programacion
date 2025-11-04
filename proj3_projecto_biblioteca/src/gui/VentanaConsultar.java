@@ -34,7 +34,7 @@ public class VentanaConsultar extends JFrame {
         JTabbedPane pestañas = new JTabbedPane();
 
         // Agregar pestaña "Alquilar libro"
-        Ventana_Alquilar panelAlquilar = new Ventana_Alquilar(libros, miembros);
+        Ventana_Alquilar panelAlquilar = new Ventana_Alquilar(libros, miembros, prestamos);
         pestañas.addTab("Alquilar libro", panelAlquilar);
 
         // Agregar pestaña "Devolver libro"
