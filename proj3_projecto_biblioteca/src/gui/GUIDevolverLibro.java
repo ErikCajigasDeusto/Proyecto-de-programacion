@@ -119,16 +119,6 @@ public class GUIDevolverLibro extends JPanel{
 		
 	}
 				
-		//El Layout del panel principal es un matriz con 2 filas y 1 columna
-//		this.getContentPane().setLayout(new GridLayout(2, 1));
-//		this.getContentPane().add(panelprestamos);
-//		
-//		this.setTitle("Ventana principal de prestamos");		
-//		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//
-//		this.setSize(800, 600);
-//		this.setLocationRelativeTo(null);
-				
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
