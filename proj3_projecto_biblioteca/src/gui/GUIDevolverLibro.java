@@ -235,7 +235,7 @@ public class GUIDevolverLibro extends JPanel{
     public void filtrarPrestamos()
     {
     	this.modeloUsuarios.setRowCount(0);
-    	
+    	int prestamo_cont=1;
     	if(miembrosBox.getSelectedIndex()!=-1)
     	{
    
@@ -245,10 +245,11 @@ public class GUIDevolverLibro extends JPanel{
     			if(miembrosBox.getSelectedItem().toString().equals(prestamo.getMiembro().getNombreApellido() )
     					&& (idbuscado == prestamo.getMiembro().getId()) )
     					{
-    						this.modeloUsuarios.addRow(new Object[] {prestamo.getId(), prestamo.getLibro().getTitulo(),
+    						this.modeloUsuarios.addRow(new Object[] {prestamo_cont, prestamo.getLibro().getTitulo(),
     								prestamo.getLibro().getGenero().name(),
     								prestamo.getLibro().getAutor().getNombreApellido(),
     								prestamo.getFecha_inicial_prestamo()});
+    						prestamo_cont++;
     					}
     		}
     	}
