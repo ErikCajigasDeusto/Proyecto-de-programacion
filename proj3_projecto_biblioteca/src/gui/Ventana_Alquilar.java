@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -34,7 +33,6 @@ public class Ventana_Alquilar extends JPanel {
 	private List<Libro> libros;
 	private List<Prestamo> prestamos;
 	private List<Miembro> miembros;
-	private int contador = 0;
 	private Libro seleccionado;
 
 	public DefaultTableModel modeloDatos;
@@ -157,8 +155,8 @@ public class Ventana_Alquilar extends JPanel {
 	}
 
 	private void alquilar(Miembro miembro) {
+		int contador = prestamos.getLast().getId()+1;
 		prestamos.add(new Prestamo(contador, seleccionado, miembro, LocalDate.now(), serialVersionUID));
-		contador++;
 		System.out.println("Préstamo añadido: " + seleccionado.getTitulo());
 	}
 
