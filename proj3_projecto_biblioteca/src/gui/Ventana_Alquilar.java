@@ -157,8 +157,8 @@ public class Ventana_Alquilar extends JPanel {
 	}
 
 	private void alquilar(Miembro miembro) {
+		contador = prestamos.size();
 		prestamos.add(new Prestamo(contador, seleccionado, miembro, LocalDate.now(), serialVersionUID));
-		contador++;
 		System.out.println("Préstamo añadido: " + seleccionado.getTitulo());
 	}
 
