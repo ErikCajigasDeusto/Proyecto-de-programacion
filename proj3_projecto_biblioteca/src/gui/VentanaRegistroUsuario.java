@@ -1,14 +1,12 @@
 package gui;
 
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,7 +33,7 @@ public class VentanaRegistroUsuario extends JFrame {
     private JButton botonCancelar;
 
     public VentanaRegistroUsuario(List<Miembro> miembros) {
-        this.miembros = miembros;
+        this.setMiembros(miembros);
     
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Biblioteca");
@@ -140,4 +138,12 @@ public class VentanaRegistroUsuario extends JFrame {
         setVisible(true);
     
     }
+
+	public List<Miembro> getMiembros() {
+		return miembros;
+	}
+
+	public void setMiembros(List<Miembro> miembros) {
+		this.miembros = miembros;
+	}
 }

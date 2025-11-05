@@ -18,7 +18,63 @@ public class VentanaConsultar extends JFrame {
     private List<Prestamo> prestamos;
     private Miembro miembroActual;
 
-    public VentanaConsultar(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos, Miembro miembroActual) {
+    /**
+	 * @return the libros
+	 */
+	public List<Libro> getLibros() {
+		return libros;
+	}
+
+	/**
+	 * @param libros the libros to set
+	 */
+	public void setLibros(List<Libro> libros) {
+		this.libros = libros;
+	}
+
+	/**
+	 * @return the miembros
+	 */
+	public List<Miembro> getMiembros() {
+		return miembros;
+	}
+
+	/**
+	 * @param miembros the miembros to set
+	 */
+	public void setMiembros(List<Miembro> miembros) {
+		this.miembros = miembros;
+	}
+
+	/**
+	 * @return the prestamos
+	 */
+	public List<Prestamo> getPrestamos() {
+		return prestamos;
+	}
+
+	/**
+	 * @param prestamos the prestamos to set
+	 */
+	public void setPrestamos(List<Prestamo> prestamos) {
+		this.prestamos = prestamos;
+	}
+
+	/**
+	 * @return the miembroActual
+	 */
+	public Miembro getMiembroActual() {
+		return miembroActual;
+	}
+
+	/**
+	 * @param miembroActual the miembroActual to set
+	 */
+	public void setMiembroActual(Miembro miembroActual) {
+		this.miembroActual = miembroActual;
+	}
+
+	public VentanaConsultar(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos, Miembro miembroActual) {
         this.libros = libros;
         this.miembros = miembros;
         this.prestamos = prestamos;
