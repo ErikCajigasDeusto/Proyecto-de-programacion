@@ -33,7 +33,6 @@ public class Ventana_Alquilar extends JPanel {
 	private List<Libro> libros;
 	private List<Prestamo> prestamos;
 	private List<Miembro> miembros;
-	private int contador = 0;
 	private Libro seleccionado;
 
 	public DefaultTableModel modeloDatos;
@@ -157,11 +156,8 @@ public class Ventana_Alquilar extends JPanel {
 
 	private void alquilar(Miembro miembro) {
 		
-		if(prestamos.size()!= 0)
-		{
-			contador = prestamos.getLast().getId()+1;
-		}
-		
+		int	contador = prestamos.getLast().getId()+1;
+
 		prestamos.add(new Prestamo(contador, seleccionado, miembro, LocalDate.now(), serialVersionUID));
 		System.out.println("Préstamo añadido: " + seleccionado.getTitulo());
 	}
