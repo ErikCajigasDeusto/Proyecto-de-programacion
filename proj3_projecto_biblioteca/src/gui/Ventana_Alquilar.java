@@ -32,7 +32,7 @@ public class Ventana_Alquilar extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private List<Libro> libros;
-	private List<Prestamo> prestamos = new ArrayList<>();
+	private List<Prestamo> prestamos;
 	private List<Miembro> miembros;
 	private int contador = 0;
 	private Libro seleccionado;
@@ -45,9 +45,10 @@ public class Ventana_Alquilar extends JPanel {
 	private JComboBox<Genero> generoBox = new JComboBox<>();
 
 	// Constructor
-	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros) {
+	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos) {
 		this.libros = libros;
 		this.miembros = miembros;
+		this.prestamos = prestamos;
 
 		setLayout(new BorderLayout(10, 10));
 		setBackground(Color.WHITE);
@@ -132,7 +133,7 @@ public class Ventana_Alquilar extends JPanel {
 		
 		while(!igual) {
 			String username = JOptionPane.showInputDialog(null, "Escribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
-			String password = JOptionPane.showInputDialog(null, "Escribe tu telefono:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+			String password = JOptionPane.showInputDialog(null, "Escribe tu password:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
 			if((username!=null)&&(password!=null)) {
 				for(Miembro miembro:miembros) {
 					if(username.equals(miembro.getNombre())) {
@@ -182,8 +183,16 @@ public class Ventana_Alquilar extends JPanel {
 		this.modeloDatos.setRowCount(0);
 		for (Libro libro : libros) {
 			
-			if(String.valueOf(generoBox.getSelectedItem()).toUpperCase().equals(Genero.DEFECTO.name().toUpperCase())) {
-				reset();
+			if(String.valueOf(generoBox.getSelectedItem()).toUpperCase().equals(Genero.DEFECTO.name().toUpperCase()) && (libro.getTitulo().toUpperCase().contains(tituloTexto.getText().toUpperCase())) && (libro.getAutor().getNombreApellido().toUpperCase().contains(autorTexto.getText().toUpperCase()))) {
+				this.modeloDatos.addRow(new Object[]{
+						libro.getId_libro(),
+						libro.getTitulo(),
+						libro.getGenero().name(),
+						libro.getAutor().getNombreApellido(),
+						libro.getPrecio(),
+						5,
+						true
+				});
 			}else if (libro.getTitulo().toUpperCase().contains(tituloTexto.getText().toUpperCase()) &&
 				libro.getAutor().getNombreApellido().toUpperCase().contains(autorTexto.getText().toUpperCase()) &&
 				libro.getGenero().name().equalsIgnoreCase(String.valueOf(generoBox.getSelectedItem()))) {
