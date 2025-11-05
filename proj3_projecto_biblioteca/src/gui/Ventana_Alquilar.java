@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -157,7 +156,12 @@ public class Ventana_Alquilar extends JPanel {
 	}
 
 	private void alquilar(Miembro miembro) {
-		contador = prestamos.size();
+		
+		if(prestamos.size()!= 0)
+		{
+			contador = prestamos.getLast().getId()+1;
+		}
+		
 		prestamos.add(new Prestamo(contador, seleccionado, miembro, LocalDate.now(), serialVersionUID));
 		System.out.println("Préstamo añadido: " + seleccionado.getTitulo());
 	}
