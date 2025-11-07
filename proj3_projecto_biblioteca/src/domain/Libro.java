@@ -127,7 +127,7 @@ public class Libro {
 	/**
 	 * @param editotrial the editotrial to set
 	 */
-	public void setEditorial(Editorial editotrial) {
+	public void setEditorial(Editorial editorial) {
 		this.editorial = editorial;
 	}
 

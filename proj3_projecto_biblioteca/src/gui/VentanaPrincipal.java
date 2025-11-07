@@ -84,8 +84,8 @@ public class VentanaPrincipal extends JFrame {
         add(panelBotones, BorderLayout.SOUTH);
 
         // Lambdas para acciones de los botones
-        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario(miembros));
-        botonMiembro.addActionListener(e -> new VentanaInicioUsuario(libros, miembros, prestamos));
+        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario(this.miembros));
+        botonMiembro.addActionListener(e -> new VentanaInicioUsuario(this.libros, this.miembros, this.prestamos));
 
         setVisible(true);
     }

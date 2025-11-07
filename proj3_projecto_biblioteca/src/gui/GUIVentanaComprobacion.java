@@ -44,6 +44,6 @@ public class GUIVentanaComprobacion extends JDialog {
         add(new JLabel("Introduce password:"));
         add(campoContra);
         add(botonEnviar);
-        setLocationRelativeTo(ventana);
+        setLocationRelativeTo(this.ventana);
     }
 }
