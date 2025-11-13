@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -93,6 +94,30 @@ public class GUIDevolverLibro extends JPanel{
 		                hija.setVisible(true);
 		            }
 		        });
+				
+				pagar.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// Pagar y eliminar el libro de la lista de prestamos
+						if ((!seleccionado.equals(null))&&idbuscado!=-1) {
+							Prestamo prestamo = null;
+							float prec=0;
+							for(Prestamo prest:prestamos) {
+								if (prest.getLibro().equals(seleccionado)) {
+									prestamo = prest;
+									prec = prestamo.getLibro().getPrecio();
+									break;
+								}
+							}
+							if(!prestamo.equals(null)) {
+								prestamos.remove(prestamo);
+								filtrarPrestamos();
+								JOptionPane.showInternalMessageDialog(GUIDevolverLibro.this, "Has pagado: " + prec + "€");
+							}
+						}
+					}
+				});
 				
 				this.txtvalor = new JTextField(20);		
 				JPanel panelPrecio = new JPanel();
