@@ -32,6 +32,7 @@ public class VentanaInicioUsuario extends JFrame {
         this.libros = libros;
         this.miembros = miembros;
         this.prestamos = prestamos;
+        this.reproductor = reproductor;
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Iniciar Sesión");
@@ -85,7 +86,7 @@ public class VentanaInicioUsuario extends JFrame {
                 if (encontrado != null) {
                     JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 
                             "Inicio de sesión correcto, bienvenido " + encontrado.getNombre());
-                    new VentanaConsultar(libros, miembros, prestamos, encontrado);
+                    new VentanaConsultar(libros, miembros, prestamos, encontrado, reproductor);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 

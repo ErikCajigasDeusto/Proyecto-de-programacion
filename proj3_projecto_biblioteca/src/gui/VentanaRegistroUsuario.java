@@ -37,7 +37,8 @@ public class VentanaRegistroUsuario extends JFrame {
 
     public VentanaRegistroUsuario(List<Miembro> miembros, reproductorAudio reproductor) {
         this.setMiembros(miembros);
-    
+        this.reproductor = reproductor;
+        
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Biblioteca");
         setSize(400, 250);

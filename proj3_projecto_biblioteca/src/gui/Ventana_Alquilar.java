@@ -50,7 +50,7 @@ public class Ventana_Alquilar extends JPanel {
 	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos, reproductorAudio reproductorAudio) {
 		//Audio
 		this.reproductorAudio = reproductorAudio;
-		this.reproductorAudio.playMusAlquilar();
+		//this.reproductorAudio.playMusAlquilar();
 		
 		
 		//Resto

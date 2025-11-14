@@ -33,7 +33,7 @@ public class VentanaPrincipal extends JFrame {
         this.libros = libros;
         this.miembros = miembros;
         this.prestamos = prestamos;
-
+        reproductor = new reproductorAudio();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Biblioteca");
         setSize(800, 600);
