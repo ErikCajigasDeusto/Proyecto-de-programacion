@@ -25,8 +25,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import domain.*;
-
-import gui.reproductorAudio;
+import io.reproductorAudio;
 
 public class GUIDevolverLibro extends JPanel{
 

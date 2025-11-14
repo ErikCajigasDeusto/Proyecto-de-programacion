@@ -15,8 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import domain.Miembro;
-
-import gui.reproductorAudio;
+import io.reproductorAudio;
 
 public class VentanaRegistroUsuario extends JFrame {
 

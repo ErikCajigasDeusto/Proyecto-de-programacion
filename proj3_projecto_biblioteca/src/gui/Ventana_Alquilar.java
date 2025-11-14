@@ -23,11 +23,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import domain.Prestamo;
+import io.reproductorAudio;
 import domain.Libro;
 import domain.Miembro;
 import domain.Genero;
-
-import gui.reproductorAudio;
 
 public class Ventana_Alquilar extends JPanel {
 	private static final long serialVersionUID = 1L;

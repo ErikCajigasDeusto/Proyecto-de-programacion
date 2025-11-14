@@ -8,8 +8,7 @@ import javax.swing.*;
 import domain.Miembro;
 import domain.Libro;
 import domain.Prestamo;
-
-import gui.reproductorAudio;
+import io.reproductorAudio;
 
 public class VentanaInicioUsuario extends JFrame {
 

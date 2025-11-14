@@ -8,8 +8,7 @@ import java.util.List;
 import domain.Libro;
 import domain.Miembro;
 import domain.Prestamo;
-
-import gui.reproductorAudio;
+import io.reproductorAudio;
 
 public class VentanaConsultar extends JFrame {
 

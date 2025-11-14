@@ -16,8 +16,7 @@ import javax.swing.JPanel;
 import domain.Libro;
 import domain.Miembro;
 import domain.Prestamo;
-
-import gui.reproductorAudio;
+import io.reproductorAudio;
 
 public class VentanaPrincipal extends JFrame {
 
