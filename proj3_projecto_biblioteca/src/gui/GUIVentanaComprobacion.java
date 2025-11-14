@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import domain.Miembro;
 
 public class GUIVentanaComprobacion extends JDialog {
 	/**
@@ -19,7 +22,7 @@ public class GUIVentanaComprobacion extends JDialog {
     private JButton botonEnviar;
     private GUIDevolverLibro ventana;
     
-    public GUIVentanaComprobacion(GUIDevolverLibro ventana) {
+    public GUIVentanaComprobacion(GUIDevolverLibro ventana, Miembro miembro) {
         super(); // Modal
         this.ventana = ventana;
         setSize(300, 200);
@@ -32,10 +35,17 @@ public class GUIVentanaComprobacion extends JDialog {
         botonEnviar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String textoUsuario = campoUsuario.getText();
+            	String textoUsuario = campoUsuario.getText();
                 String textoContra = campoContra.getText();
-                ventana.recibirTexto(textoUsuario,textoContra);  
-                dispose(); 
+                if((!textoContra.equals(miembro.getpassword())||!textoUsuario.equals(miembro.getNombre()))) {
+                	JOptionPane.showMessageDialog(GUIVentanaComprobacion.this, "Usuario no encontrado, inténtalo de nuevo");
+                	campoContra.setText("");
+                	campoUsuario.setText("");
+                }else {
+                	ventana.recibirTexto(textoUsuario,textoContra);  
+                    dispose();
+                }
+                 
             }
         });
         

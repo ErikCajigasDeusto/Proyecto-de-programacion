@@ -42,6 +42,7 @@ public class GUIDevolverLibro extends JPanel{
 	private Libro seleccionado;
 	private JComboBox<String> miembrosBox = new JComboBox<String>();
 	private int idbuscado =-1;
+	private GUIVentanaComprobacion hija = null;
 	
 	
 	public GUIDevolverLibro(List<Prestamo> prestamos, List<Miembro> miembros) {
@@ -88,10 +89,14 @@ public class GUIDevolverLibro extends JPanel{
 		            @Override
 		            
 		            public void actionPerformed(ActionEvent e) {
-		            	
-		                // Crear y mostrar la ventana hija, pasándose a sí misma como referencia
-		                GUIVentanaComprobacion hija = new GUIVentanaComprobacion(GUIDevolverLibro.this);
-		                hija.setVisible(true);
+		            	//Llama a inicio de sesión, funcion que creará una ventana de inicio de sesión
+		            	String miembrostr = (String) miembrosBox.getSelectedItem();
+		        		for (Miembro miembro:miembros) {
+		        			if(miembro.getNombreApellido().equals(miembrostr)) {
+		        				inicioSesion(miembro);
+		        				break;
+		        			}
+		        		}
 		            }
 		        });
 				
@@ -141,7 +146,14 @@ public class GUIDevolverLibro extends JPanel{
 				this.setVisible(true);		
 		
 	}
-				
+		
+	
+	public void inicioSesion(Miembro miembro) {
+		// Crear y mostrar la ventana hija, pasándose a sí misma como referencia
+		hija = new GUIVentanaComprobacion(GUIDevolverLibro.this,miembro);
+        hija.setVisible(true);
+	}
+	
 	
 	private void initTables() {
 		//Cabecera del modelo de datos
