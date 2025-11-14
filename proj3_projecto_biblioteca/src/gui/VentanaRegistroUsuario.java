@@ -16,12 +16,15 @@ import javax.swing.JTextField;
 
 import domain.Miembro;
 
+import gui.reproductorAudio;
+
 public class VentanaRegistroUsuario extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private List<Miembro>miembros;
 
-
+    private reproductorAudio reproductor;
+    
     private JTextField campo_nombreUsuario;
     private JTextField campo_contraseña;
     private JTextField campo_confirmar_contraseña;
@@ -32,7 +35,7 @@ public class VentanaRegistroUsuario extends JFrame {
     private JButton botonOk;
     private JButton botonCancelar;
 
-    public VentanaRegistroUsuario(List<Miembro> miembros) {
+    public VentanaRegistroUsuario(List<Miembro> miembros, reproductorAudio reproductor) {
         this.setMiembros(miembros);
     
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -27,9 +27,13 @@ import domain.Libro;
 import domain.Miembro;
 import domain.Genero;
 
+import gui.reproductorAudio;
+
 public class Ventana_Alquilar extends JPanel {
 	private static final long serialVersionUID = 1L;
 
+	private reproductorAudio reproductorAudio;
+	
 	private List<Libro> libros;
 	private List<Prestamo> prestamos;
 	private List<Miembro> miembros;
@@ -43,7 +47,13 @@ public class Ventana_Alquilar extends JPanel {
 	private JComboBox<Genero> generoBox = new JComboBox<>();
 
 	// Constructor
-	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos) {
+	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos, reproductorAudio reproductorAudio) {
+		//Audio
+		this.reproductorAudio = reproductorAudio;
+		this.reproductorAudio.playMusAlquilar();
+		
+		
+		//Resto
 		this.libros = libros;
 		this.miembros = miembros;
 		this.prestamos = prestamos;

@@ -9,10 +9,14 @@ import domain.Libro;
 import domain.Miembro;
 import domain.Prestamo;
 
+import gui.reproductorAudio;
+
 public class VentanaConsultar extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
+    private reproductorAudio reproductor;
+    
     private List<Libro> libros;
     private List<Miembro> miembros;
     private List<Prestamo> prestamos;
@@ -90,11 +94,11 @@ public class VentanaConsultar extends JFrame {
         JTabbedPane pestañas = new JTabbedPane();
 
         // Agregar pestaña "Alquilar libro"
-        Ventana_Alquilar panelAlquilar = new Ventana_Alquilar(libros, miembros, prestamos);
+        Ventana_Alquilar panelAlquilar = new Ventana_Alquilar(libros, miembros, prestamos, reproductor);
         pestañas.addTab("Alquilar libro", panelAlquilar);
 
         // Agregar pestaña "Devolver libro"
-        GUIDevolverLibro panelDevolver =  new GUIDevolverLibro(prestamos, miembros);
+        GUIDevolverLibro panelDevolver =  new GUIDevolverLibro(prestamos, miembros, reproductor);
         pestañas.addTab("Devolver libro", panelDevolver);
 
         // Añadir pestañas al frame

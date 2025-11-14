@@ -11,6 +11,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import domain.Miembro;
+import gui.reproductorAudio;
 
 public class GUIVentanaComprobacion extends JDialog {
 	/**
@@ -21,9 +22,11 @@ public class GUIVentanaComprobacion extends JDialog {
     private JPasswordField campoContra;
     private JButton botonEnviar;
     private GUIDevolverLibro ventana;
+    private reproductorAudio reproductor;
     
-    public GUIVentanaComprobacion(GUIDevolverLibro ventana, Miembro miembro) {
+    public GUIVentanaComprobacion(GUIDevolverLibro ventana, Miembro miembro, reproductorAudio reproductor) {
         super(); // Modal
+        this.reproductor = reproductor;
         this.ventana = ventana;
         setSize(300, 200);
         setLayout(new java.awt.FlowLayout());

@@ -9,6 +9,8 @@ import domain.Miembro;
 import domain.Libro;
 import domain.Prestamo;
 
+import gui.reproductorAudio;
+
 public class VentanaInicioUsuario extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -20,11 +22,13 @@ public class VentanaInicioUsuario extends JFrame {
     private JButton botonOk;
     private JButton botonCancelar;
 
+    private reproductorAudio reproductor;
+    
     private List<Libro> libros;
     private List<Miembro> miembros;
     private List<Prestamo> prestamos;
 
-    public VentanaInicioUsuario(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos) {
+    public VentanaInicioUsuario(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos, reproductorAudio reproductor) {
         this.libros = libros;
         this.miembros = miembros;
         this.prestamos = prestamos;
