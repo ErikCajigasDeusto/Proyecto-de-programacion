@@ -21,18 +21,20 @@ public class VentanaInicioUsuario extends JFrame {
     private JButton botonOk;
     private JButton botonCancelar;
 
-    private reproductorAudio reproductor;
+    private reproductorAudio repro;
     
-    private List<Libro> libros;
-    private List<Miembro> miembros;
-    private List<Prestamo> prestamos;
+    private List<Libro> librosList;
+    private List<Miembro> miembrosList;
+    private List<Prestamo> prestamosList;
 
     public VentanaInicioUsuario(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos, reproductorAudio reproductor) {
-        this.libros = libros;
-        this.miembros = miembros;
-        this.prestamos = prestamos;
-        this.reproductor = reproductor;
+        this.librosList = libros;
+        this.miembrosList = miembros;
+        this.prestamosList = prestamos;
+        this.repro = reproductor;
 
+        //reproductor.playMus("");
+        
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Iniciar Sesión");
         setSize(370, 180);
@@ -75,7 +77,7 @@ public class VentanaInicioUsuario extends JFrame {
                 String telefono = campo_contraseña.getText().trim();
 
                 Miembro encontrado = null;
-                for (Miembro m : miembros) {
+                for (Miembro m : miembrosList) {
                     if (m.getNombre().equalsIgnoreCase(nombre) && m.getpassword().equals(telefono)) {
                         encontrado = m;
                         break;
@@ -85,9 +87,10 @@ public class VentanaInicioUsuario extends JFrame {
                 if (encontrado != null) {
                     JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 
                             "Inicio de sesión correcto, bienvenido " + encontrado.getNombre());
-                    new VentanaConsultar(libros, miembros, prestamos, encontrado, reproductor);
+                    new VentanaConsultar(librosList, miembrosList, prestamosList, encontrado, repro);
                     dispose();
                 } else {
+                	//repro.playSFX("");
                     JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 
                             "Usuario no encontrado. Inténtalo de nuevo.");
                 }

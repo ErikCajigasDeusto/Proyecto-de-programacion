@@ -54,6 +54,9 @@ public class GUIDevolverLibro extends JPanel{
 				this.prestamos = prestamos;
 				this.miembros = miembros;
 				this.reproductor = reproductor;
+				
+				//reproductor.playMus("");
+				
 				setLayout(new BorderLayout(10, 10));
 				setBackground(Color.WHITE);
 
@@ -121,6 +124,7 @@ public class GUIDevolverLibro extends JPanel{
 							if(!prestamo.equals(null)) {
 								prestamos.remove(prestamo);
 								filtrarPrestamos();
+								//reproductor.playSFX("");
 								JOptionPane.showMessageDialog(GUIDevolverLibro.this, "Has pagado el libro, gracias");
 							}
 						}

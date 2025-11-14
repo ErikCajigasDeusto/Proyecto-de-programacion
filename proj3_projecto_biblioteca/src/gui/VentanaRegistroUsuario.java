@@ -22,7 +22,7 @@ public class VentanaRegistroUsuario extends JFrame {
     private static final long serialVersionUID = 1L;
     private List<Miembro>miembros;
 
-    private reproductorAudio reproductor;
+    private reproductorAudio repro;
     
     private JTextField campo_nombreUsuario;
     private JTextField campo_contraseña;
@@ -36,7 +36,9 @@ public class VentanaRegistroUsuario extends JFrame {
 
     public VentanaRegistroUsuario(List<Miembro> miembros, reproductorAudio reproductor) {
         this.setMiembros(miembros);
-        this.reproductor = reproductor;
+        this.repro = reproductor;
+        
+        //repro.playMus("");
         
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Biblioteca");
@@ -128,6 +130,10 @@ public class VentanaRegistroUsuario extends JFrame {
 
         	    if (existe) {
         	        JOptionPane.showMessageDialog(this, "El usuario ya existe"); //si ya fue registrado
+        	        //repro.playSFX("");
+        	    } else if(!contraseña.equals(confirmar)) {
+        	    	JOptionPane.showMessageDialog(this, "Las contraseñas no son iguales");//si la contraseña ni concuerda con la 2ª vez que se escribe la contraseña
+        	        //repro.playSFX("");
         	    } else {
         	        int IdUsuario = miembros.size() + 1;
         	        Miembro nuevo = new Miembro(IdUsuario, nombre, "apellido", contraseña);

@@ -22,11 +22,11 @@ public class GUIVentanaComprobacion extends JDialog {
     private JPasswordField campoContra;
     private JButton botonEnviar;
     private GUIDevolverLibro ventana;
-    private reproductorAudio reproductor;
+    private reproductorAudio repro;
     
     public GUIVentanaComprobacion(GUIDevolverLibro ventana, Miembro miembro, reproductorAudio reproductor) {
         super(); // Modal
-        this.reproductor = reproductor;
+        this.repro = reproductor;
         this.ventana = ventana;
         setSize(300, 200);
         setLayout(new java.awt.FlowLayout());
@@ -39,8 +39,9 @@ public class GUIVentanaComprobacion extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
             	String textoUsuario = campoUsuario.getText();
-                String textoContra = campoContra.getText();
+                String textoContra = String.valueOf(campoContra.getPassword());
                 if((!textoContra.equals(miembro.getpassword())||!textoUsuario.equals(miembro.getNombre()))) {
+                	//repro.playSFX("");
                 	JOptionPane.showMessageDialog(GUIVentanaComprobacion.this, "Usuario no encontrado, inténtalo de nuevo");
                 	campoContra.setText("");
                 	campoUsuario.setText("");

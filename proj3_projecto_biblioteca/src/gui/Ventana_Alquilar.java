@@ -49,7 +49,7 @@ public class Ventana_Alquilar extends JPanel {
 	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos, reproductorAudio reproductorAudio) {
 		//Audio
 		this.reproductorAudio = reproductorAudio;
-		//this.reproductorAudio.playMusAlquilar();
+		//this.reproductorAudio.playMus("");
 		
 		
 		//Resto
@@ -153,6 +153,7 @@ public class Ventana_Alquilar extends JPanel {
 				}
 			}
 			if (!igual) {
+				//reproductorAudio.playSFX("");
 				JOptionPane.showMessageDialog(this, "Usuario no encontrado, inténtalo de nuevo");
 				return;
 			}
@@ -168,7 +169,7 @@ public class Ventana_Alquilar extends JPanel {
 		int	contador = prestamos.getLast().getId()+1;
 
 		prestamos.add(new Prestamo(contador, seleccionado, miembro, LocalDate.now(), serialVersionUID));
-		System.out.println("Préstamo añadido: " + seleccionado.getTitulo());
+		JOptionPane.showMessageDialog(this, "Libro alquilado");
 	}
 
 	private void reset() {
