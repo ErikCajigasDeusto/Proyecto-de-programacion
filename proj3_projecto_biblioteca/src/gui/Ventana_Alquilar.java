@@ -37,14 +37,15 @@ public class Ventana_Alquilar extends JPanel {
 
 	public DefaultTableModel modeloDatos;
 	public JTable TablalibrosDisponibles;
+	private VentanaConsultar ventana;
 
 	private JTextField tituloTexto = new JTextField();
 	private JTextField autorTexto = new JTextField();
 	private JComboBox<Genero> generoBox = new JComboBox<>();
 
 	// Constructor
-	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos) {
-		
+	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos, VentanaConsultar ventana) {
+		this.ventana = ventana;
 		this.libros = libros;
 		this.miembros = miembros;
 		this.prestamos = prestamos;
@@ -152,6 +153,7 @@ public class Ventana_Alquilar extends JPanel {
 
 	private void salir() {
 		JOptionPane.showMessageDialog(this, "Saliendo del sistema de alquiler.");
+		ventana.dispose();
 	}
 
 	private void alquilar(Miembro miembro) {
