@@ -16,13 +16,10 @@ import javax.swing.JPanel;
 import domain.Libro;
 import domain.Miembro;
 import domain.Prestamo;
-import io.reproductorAudio;
 
 public class VentanaPrincipal extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    
-    private reproductorAudio reproductor;
     
     private List<Libro> libros;
     private List<Miembro> miembros;
@@ -32,9 +29,6 @@ public class VentanaPrincipal extends JFrame {
         this.libros = libros;
         this.miembros = miembros;
         this.prestamos = prestamos;
-        
-        reproductor = new reproductorAudio();
-        //reproductor.playMus("resources/Audio/menu.wav");
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Biblioteca");
@@ -90,8 +84,8 @@ public class VentanaPrincipal extends JFrame {
         add(panelBotones, BorderLayout.SOUTH);
 
         // Lambdas para acciones de los botones
-        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario(this.miembros, reproductor));
-        botonMiembro.addActionListener(e -> new VentanaInicioUsuario(this.libros, this.miembros, this.prestamos, reproductor));
+        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario(this.miembros));
+        botonMiembro.addActionListener(e -> new VentanaInicioUsuario(this.libros, this.miembros, this.prestamos));
 
         setVisible(true);
     }

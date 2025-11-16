@@ -8,7 +8,6 @@ import javax.swing.*;
 import domain.Miembro;
 import domain.Libro;
 import domain.Prestamo;
-import io.reproductorAudio;
 
 public class VentanaInicioUsuario extends JFrame {
 
@@ -20,20 +19,15 @@ public class VentanaInicioUsuario extends JFrame {
     private JLabel contraseña;
     private JButton botonOk;
     private JButton botonCancelar;
-
-    private reproductorAudio repro;
     
     private List<Libro> librosList;
     private List<Miembro> miembrosList;
     private List<Prestamo> prestamosList;
 
-    public VentanaInicioUsuario(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos, reproductorAudio reproductor) {
+    public VentanaInicioUsuario(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos) {
         this.librosList = libros;
         this.miembrosList = miembros;
         this.prestamosList = prestamos;
-        this.repro = reproductor;
-
-        //reproductor.playMus("");
         
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Iniciar Sesión");
@@ -87,10 +81,9 @@ public class VentanaInicioUsuario extends JFrame {
                 if (encontrado != null) {
                     JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 
                             "Inicio de sesión correcto, bienvenido " + encontrado.getNombre());
-                    new VentanaConsultar(librosList, miembrosList, prestamosList, encontrado, repro);
+                    new VentanaConsultar(librosList, miembrosList, prestamosList, encontrado);
                     dispose();
                 } else {
-                	//repro.playSFX("");
                     JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 
                             "Usuario no encontrado. Inténtalo de nuevo.");
                 }

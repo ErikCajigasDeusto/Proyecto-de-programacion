@@ -8,13 +8,10 @@ import java.util.List;
 import domain.Libro;
 import domain.Miembro;
 import domain.Prestamo;
-import io.reproductorAudio;
 
 public class VentanaConsultar extends JFrame {
 
     private static final long serialVersionUID = 1L;
-
-    private reproductorAudio reproductor;
     
     private List<Libro> libros;
     private List<Miembro> miembros;
@@ -77,12 +74,11 @@ public class VentanaConsultar extends JFrame {
 		this.miembroActual = miembroActual;
 	}
 
-	public VentanaConsultar(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos, Miembro miembroActual, reproductorAudio reproductor) {
+	public VentanaConsultar(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos, Miembro miembroActual) {
         this.libros = libros;
         this.miembros = miembros;
         this.prestamos = prestamos;
         this.miembroActual = miembroActual;
-        this.reproductor = reproductor;
 
         setTitle("Panel de usuario: " + miembroActual.getNombre());
         setSize(800, 400);
@@ -94,11 +90,11 @@ public class VentanaConsultar extends JFrame {
         JTabbedPane pestañas = new JTabbedPane();
 
         // Agregar pestaña "Alquilar libro"
-        Ventana_Alquilar panelAlquilar = new Ventana_Alquilar(libros, miembros, prestamos, this.reproductor);
+        Ventana_Alquilar panelAlquilar = new Ventana_Alquilar(libros, miembros, prestamos);
         pestañas.addTab("Alquilar libro", panelAlquilar);
 
         // Agregar pestaña "Devolver libro"
-        GUIDevolverLibro panelDevolver =  new GUIDevolverLibro(prestamos, miembros, this.reproductor);
+        GUIDevolverLibro panelDevolver =  new GUIDevolverLibro(prestamos, miembros);
         pestañas.addTab("Devolver libro", panelDevolver);
 
         // Añadir pestañas al frame
