@@ -113,15 +113,18 @@ public class GUIDevolverLibro extends JPanel{
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						// Pagar y eliminar el libro de la lista de prestamos
+						String miembrostr = (String) miembrosBox.getSelectedItem();
 						if ((!seleccionado.equals(null))&&idbuscado!=-1) {
 							Prestamo prestamo = null;
 							for(Prestamo prest:prestamos) {
-								if (prest.getLibro().equals(seleccionado)) {
+								if (prest.getLibro().equals(seleccionado) && prest.getMiembro().getNombreApellido().equals(miembrostr)) {
 									prestamo = prest;
 									break;
 								}
+								
 							}
 							if(!prestamo.equals(null)) {
+								System.out.println(prestamo);
 								prestamos.remove(prestamo);
 								filtrarPrestamos();
 								//reproductor.playSFX("");
@@ -272,7 +275,6 @@ public class GUIDevolverLibro extends JPanel{
     	int prestamo_cont=1;
     	if(miembrosBox.getSelectedIndex()!=-1)
     	{
-   
     		for( Prestamo prestamo: prestamos)
     		{
     			
@@ -286,6 +288,7 @@ public class GUIDevolverLibro extends JPanel{
     						prestamo_cont++;
     					}
     		}
+    		System.out.println(prestamo_cont);
     	}
     	
     }

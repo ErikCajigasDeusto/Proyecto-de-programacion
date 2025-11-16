@@ -1,6 +1,7 @@
 package domain;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Prestamo {
 	
@@ -89,6 +90,24 @@ public class Prestamo {
 		return String.format("Prestamo [id=%s, libro=%s, miembro=%s, fecha_inicial_prestamo=%s, tiempo_prestamo=%s]",
 				id, libro, miembro, fecha_inicial_prestamo, tiempo_prestamo);
 	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(fecha_inicial_prestamo, id, libro, miembro);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Prestamo other = (Prestamo) obj;
+		return Objects.equals(fecha_inicial_prestamo, other.fecha_inicial_prestamo) && id == other.id
+				&& Objects.equals(libro, other.libro) && Objects.equals(miembro, other.miembro);
+	}
+	
+	
 	
 	
 	

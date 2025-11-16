@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.Objects;
+
 public class Miembro{
 	
 	private int id;
@@ -121,6 +123,24 @@ public class Miembro{
 	public String toString() {
 		return String.format("Miembro [id=%s, nombre=%s, apellido=%s, password=%s, membresia=%s]", id, nombre, apellido,
 				password, membresia);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(apellido, id, membresia, nombre, password);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Miembro other = (Miembro) obj;
+		return Objects.equals(apellido, other.apellido) && id == other.id && Objects.equals(membresia, other.membresia)
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(password, other.password);
 	}
 	
 	

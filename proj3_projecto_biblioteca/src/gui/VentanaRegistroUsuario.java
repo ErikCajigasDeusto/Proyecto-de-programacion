@@ -117,6 +117,7 @@ public class VentanaRegistroUsuario extends JFrame {
         //Boton Ok para añadir el usuario a la lista
         botonOk.addActionListener(e->{
         	String nombre= campo_nombreUsuario.getText();
+        	
         	String contraseña=campo_contraseña.getText().trim();
         	String confirmar=campo_confirmar_contraseña.getText();
         	  
