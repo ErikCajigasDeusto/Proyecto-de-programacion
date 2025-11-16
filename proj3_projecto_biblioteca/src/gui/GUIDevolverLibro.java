@@ -118,7 +118,7 @@ public class GUIDevolverLibro extends JPanel{
 								
 							}
 							if(!prestamo.equals(null)) {
-								System.out.println(prestamo);
+
 								prestamos.remove(prestamo);
 								filtrarPrestamos();
 								JOptionPane.showMessageDialog(GUIDevolverLibro.this, "Has pagado el libro, gracias");
