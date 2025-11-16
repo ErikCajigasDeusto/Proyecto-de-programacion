@@ -129,23 +129,22 @@ public class Ventana_Alquilar extends JPanel {
 	// ---------- MÉTODOS ----------
 	private void iniciarSesion() {
 		boolean igual = false;
-		
-		while(!igual) {
-			String username = JOptionPane.showInputDialog(null, "Escribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
-			String password = JOptionPane.showInputDialog(null, "Escribe tu password:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
-			if((username!=null)&&(password!=null)) {
-				for(Miembro miembro:miembros) {
-					if(username.equals(miembro.getNombre())) {
-						if(password.equals(miembro.getpassword())) {
-							igual = true;
-							alquilar(miembro);
-							break;
-						}
+		String username = JOptionPane.showInputDialog(null, "Escribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+		String password = JOptionPane.showInputDialog(null, "Escribe tu password:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+		if((username!=null)&&(password!=null)) {
+			for(Miembro miembro:miembros) {
+				if(username.equals(miembro.getNombre())) {
+					if(password.equals(miembro.getpassword())) {
+						igual = true;
+						alquilar(miembro);
+						break;
 					}
 				}
 			}
-			if (!igual) {
+			if(!igual&&(!username.equals("")||(!password.equals("")))) {
 				JOptionPane.showMessageDialog(this, "Usuario no encontrado, inténtalo de nuevo");
+				iniciarSesion();
+			}else {
 				return;
 			}
 		}
