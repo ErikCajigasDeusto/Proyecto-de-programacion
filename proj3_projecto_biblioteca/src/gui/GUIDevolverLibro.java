@@ -25,7 +25,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import domain.*;
-import io.reproductorAudio;
 
 public class GUIDevolverLibro extends JPanel{
 
@@ -34,8 +33,6 @@ public class GUIDevolverLibro extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private reproductorAudio reproductor;
 	
 	private List<Prestamo> prestamos;
 	private List<Miembro> miembros;
@@ -49,13 +46,10 @@ public class GUIDevolverLibro extends JPanel{
 	private GUIVentanaComprobacion hija = null;
 	
 	
-	public GUIDevolverLibro(List<Prestamo> prestamos, List<Miembro> miembros, reproductorAudio reproductor) {
+	public GUIDevolverLibro(List<Prestamo> prestamos, List<Miembro> miembros) {
 		//Asignamos la lista de prestamos a la variable local
 				this.prestamos = prestamos;
 				this.miembros = miembros;
-				this.reproductor = reproductor;
-				
-				//reproductor.playMus("");
 				
 				setLayout(new BorderLayout(10, 10));
 				setBackground(Color.WHITE);
@@ -124,7 +118,6 @@ public class GUIDevolverLibro extends JPanel{
 							if(!prestamo.equals(null)) {
 								prestamos.remove(prestamo);
 								filtrarPrestamos();
-								//reproductor.playSFX("");
 								JOptionPane.showMessageDialog(GUIDevolverLibro.this, "Has pagado el libro, gracias");
 							}
 						}
@@ -159,7 +152,7 @@ public class GUIDevolverLibro extends JPanel{
 	
 	public void inicioSesion(Miembro miembro) {
 		// Crear y mostrar la ventana hija, pasándose a sí misma como referencia
-		hija = new GUIVentanaComprobacion(GUIDevolverLibro.this,miembro, reproductor);
+		hija = new GUIVentanaComprobacion(GUIDevolverLibro.this,miembro);
         hija.setVisible(true);
 	}
 	

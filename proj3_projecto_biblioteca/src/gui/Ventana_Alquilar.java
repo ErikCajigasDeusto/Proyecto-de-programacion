@@ -23,15 +23,12 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import domain.Prestamo;
-import io.reproductorAudio;
 import domain.Libro;
 import domain.Miembro;
 import domain.Genero;
 
 public class Ventana_Alquilar extends JPanel {
 	private static final long serialVersionUID = 1L;
-
-	private reproductorAudio reproductorAudio;
 	
 	private List<Libro> libros;
 	private List<Prestamo> prestamos;
@@ -46,13 +43,8 @@ public class Ventana_Alquilar extends JPanel {
 	private JComboBox<Genero> generoBox = new JComboBox<>();
 
 	// Constructor
-	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos, reproductorAudio reproductorAudio) {
-		//Audio
-		this.reproductorAudio = reproductorAudio;
-		//this.reproductorAudio.playMus("");
+	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos) {
 		
-		
-		//Resto
 		this.libros = libros;
 		this.miembros = miembros;
 		this.prestamos = prestamos;
@@ -153,7 +145,6 @@ public class Ventana_Alquilar extends JPanel {
 				}
 			}
 			if (!igual) {
-				//reproductorAudio.playSFX("");
 				JOptionPane.showMessageDialog(this, "Usuario no encontrado, inténtalo de nuevo");
 				return;
 			}
