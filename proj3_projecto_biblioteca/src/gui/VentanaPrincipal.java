@@ -34,7 +34,7 @@ public class VentanaPrincipal extends JFrame {
         this.prestamos = prestamos;
         
         reproductor = new reproductorAudio();
-        //reproductor.playMus("");
+        //reproductor.playMus("resources/Audio/menu.wav");
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Biblioteca");
