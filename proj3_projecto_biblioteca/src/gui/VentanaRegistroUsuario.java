@@ -111,7 +111,7 @@ public class VentanaRegistroUsuario extends JFrame {
         //Boton Ok para añadir el usuario a la lista
         botonOk.addActionListener(e->{
         	String nombre= campo_nombreUsuario.getText();
-        	
+        	String apellido= new String();
         	String contraseña=campo_contraseña.getText().trim();
         	String confirmar=campo_confirmar_contraseña.getText();
         	  
@@ -129,7 +129,7 @@ public class VentanaRegistroUsuario extends JFrame {
         	    	JOptionPane.showMessageDialog(this, "Las contraseñas no son iguales");//si la contraseña ni concuerda con la 2ª vez que se escribe la contraseña
         	    } else {
         	        int IdUsuario = miembros.size() + 1;
-        	        Miembro nuevo = new Miembro(IdUsuario, nombre, "apellido", contraseña);
+        	        Miembro nuevo = new Miembro(IdUsuario, nombre, apellido, contraseña);
         	        miembros.add(nuevo);
         	        JOptionPane.showMessageDialog(this, "Usuario registrado");//nuevo usuario registrado
         	        dispose(); 
