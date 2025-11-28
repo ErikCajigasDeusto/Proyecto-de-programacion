@@ -15,7 +15,6 @@ public class VentanaInicioUsuario extends JFrame {
 
     private JTextField campo_nombreUsuario;
     private JTextField campo_contraseña;
-    private JLabel nombre;
     private JLabel contraseña;
     private JButton botonOk;
     private JButton botonCancelar;
