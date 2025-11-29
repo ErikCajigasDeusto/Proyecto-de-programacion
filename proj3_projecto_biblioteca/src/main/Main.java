@@ -1,5 +1,8 @@
 package main;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +14,18 @@ import gui.*;
 public class Main {
 
     public static void main(String[] args) {
+    	try {
+    		Class.forName("org.sqlite.JDBC");
+    	}catch(ClassNotFoundException e) {
+    		System.out.println("No se ha podido cargar el driver de la base de datos");
+    		
+    	}
+    	try(Connection conn=DriverManager.getConnection("jdbc:sqlite:src/resources/db/ProyectoBiblioteca.db")){
+    		System.out.println("Conectado a la base de datos SQLite");
+    	}catch(SQLException e) {
+    		System.out.println("Error al conectarse a la base de datos: "+e.getMessage());
+    		
+    	}
 
         // EDITORIALES
         Editorial alfa = new Editorial(1, "Alfa", "Bilbao");
