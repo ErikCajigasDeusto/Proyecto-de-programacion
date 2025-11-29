@@ -141,6 +141,10 @@ public class Libro {
 		return String.format("Libro [id_libro=%s, titulo=%s, genero=%s, precio=%s, autor=%s, editotrial=%s]", id_libro,
 				titulo, genero, precio, autor, editorial);
 	}
+	public int getId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	
 	
