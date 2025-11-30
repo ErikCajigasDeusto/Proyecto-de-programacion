@@ -14,7 +14,7 @@ public class VentanaInicioUsuario extends JFrame {
     private static final long serialVersionUID = 1L;
 
     private JTextField campo_nombreUsuario;
-    private JTextField campo_contraseña;
+    private JPasswordField campo_contraseña;
     private JLabel contraseña;
     private JButton botonOk;
     private JButton botonCancelar;
@@ -46,7 +46,7 @@ public class VentanaInicioUsuario extends JFrame {
         JPanel panelContraseña = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contraseña = new JLabel("Contraseña:");
         contraseña.setAlignmentX(LEFT_ALIGNMENT);
-        campo_contraseña = new JTextField(20);
+        campo_contraseña = new JPasswordField(20);
         panelContraseña.add(contraseña);
         panelContraseña.add(campo_contraseña);
 

@@ -188,10 +188,15 @@ public class GUIDevolverLibro extends JPanel{
 			{
 				modeloUsuarios.isCellEditable(row, column);
 			}
-			JLabel result = new JLabel(value.toString());			
-			result.setHorizontalAlignment(JLabel.CENTER);
-			result.setBackground(table.getBackground());
-			result.setForeground(table.getForeground());
+			JLabel result = new JLabel(value.toString());
+			if (row % 2 == 0) {
+				result.setBackground(new Color(245, 245, 245));
+			} else {
+				result.setBackground(new Color(220, 240, 230));
+			}
+			if (isSelected) {
+				result.setBackground(new Color(184, 207, 229));
+			}
 			result.setOpaque(true);
 			return result;
 		};
