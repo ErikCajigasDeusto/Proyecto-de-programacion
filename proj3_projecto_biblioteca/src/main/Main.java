@@ -2,6 +2,7 @@ package main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -40,7 +41,7 @@ public class Main {
                     String nombre = rsEditorial.getString("NOMBRE");
                     String direccion = rsEditorial.getString("DIRECCION");
                     editoriales.add(new Editorial(id, nombre, direccion));
-                    System.out.println("Editorial cargada: " + nombre + ", Dirección: " + direccion);
+                   
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -57,7 +58,7 @@ public class Main {
                     String apellido = rsAutor.getString("APELLIDO");
                     String nacionalidad = rsAutor.getString("NACIONALIDAD");
                     autores.add(new Autor(id, nombre, apellido, nacionalidad));
-                    System.out.println("Autor cargado: " + nombre + " " + apellido + ", Nacionalidad: " + nacionalidad);
+                    
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -78,7 +79,6 @@ public class Main {
 
                     Libro libro = new Libro(id, titulo, Genero.valueOf(genero), precio, autores.get(autorId - 1), editoriales.get(editorialId - 1));
                     libros.add(libro);
-                    System.out.println("Libro cargado: " + titulo + ", Género: " + genero);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -95,13 +95,11 @@ public class Main {
                     String apellido = rsMiembro.getString("APELLIDO");
                     String contrasena = rsMiembro.getString("CONTRASEÑA");
                     miembros.add(new Miembro(id, nombre, apellido, contrasena));
-                    System.out.println("Miembro cargado: " + nombre + " " + apellido);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             for (Miembro miembro : miembros) {
-                System.out.println("Miembro cargado: " + miembro.getNombre());
             }
             //PRESTAMOS
             String prestamoQuery = "SELECT * FROM PRESTAMO";
@@ -117,7 +115,6 @@ public class Main {
 
                     Prestamo prestamo = new Prestamo(id, libros.get(libroId - 1), miembros.get(miembroId - 1), fecha, 0);
                     prestamos.add(prestamo);
-                    System.out.println("Préstamo cargado: " + prestamo.getLibro().getTitulo() + " a " + prestamo.getMiembro().getNombre());
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -130,8 +127,24 @@ public class Main {
 
         } catch (SQLException e) {
             System.out.println("Error al conectarse a la base de datos: " + e.getMessage());
-        }
-    }
-}
+        		}	
+    		}
+		
 
+		//AGREGAR NUEVO MIEMBRO A LA BASE DE DATOS
+		public static void nuevoMiembro(Connection conn, String nombre, String apellido, String contraseña) {
+			String sql = "INSERT INTO MIEMBRO (NOMBRE, APELLIDO, CONTRASEÑA) VALUES (?, ?, ?)";
+
+		    try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+		        stmt.setString(1, nombre);
+		        stmt.setString(2, apellido);
+		        stmt.setString(3, contraseña);
+
+		        stmt.executeUpdate();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
+	}
+	
 
