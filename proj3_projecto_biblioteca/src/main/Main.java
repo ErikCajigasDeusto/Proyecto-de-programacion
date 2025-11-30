@@ -72,10 +72,11 @@ public class Main {
                     int id = rsLibro.getInt("ID_LIBRO");
                     String titulo = rsLibro.getString("TITULO");
                     String genero = rsLibro.getString("GENERO");
+                    float precio = rsLibro.getFloat("PRECIO");
                     int autorId = rsLibro.getInt("ID_AUTOR");
                     int editorialId = rsLibro.getInt("ID_EDITORIAL");
 
-                    Libro libro = new Libro(id, titulo, Genero.valueOf(genero), 0, autores.get(autorId - 1), editoriales.get(editorialId - 1));
+                    Libro libro = new Libro(id, titulo, Genero.valueOf(genero), precio, autores.get(autorId - 1), editoriales.get(editorialId - 1));
                     libros.add(libro);
                     System.out.println("Libro cargado: " + titulo + ", Género: " + genero);
                 }
