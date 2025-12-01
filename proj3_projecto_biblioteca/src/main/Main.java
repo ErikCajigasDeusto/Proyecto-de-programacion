@@ -24,7 +24,7 @@ public class Main {
         }
 
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:src/resources/db/ProyectoBiblioteca.db")) {
-            System.out.println("Conectado a la base de datos SQLite");
+            
 
             //EDITORIALES
             List<Editorial> editoriales = new ArrayList<>();
@@ -99,8 +99,7 @@ public class Main {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            for (Miembro miembro : miembros) {
-            }
+            
             //PRESTAMOS
             String prestamoQuery = "SELECT * FROM PRESTAMO";
             try (Statement stmt = conn.createStatement();
