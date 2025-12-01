@@ -26,9 +26,11 @@ public class VentanaRegistroUsuario extends JFrame {
     private List<Miembro>miembros;
     
     private JTextField campo_nombreUsuario;
+    private JTextField campo_apellido;
     private JTextField campo_contraseña;
     private JTextField campo_confirmar_contraseña;
     private JLabel nombre;
+    private JLabel apellido;
     private JLabel contraseña;
     private JLabel confirmar_contraseña;
     private JLabel nivel;
@@ -54,6 +56,13 @@ public class VentanaRegistroUsuario extends JFrame {
         campo_nombreUsuario = new JTextField(20);
         panelNombre.add(nombre);
         panelNombre.add(campo_nombreUsuario);
+        
+        //Panel para el apellido(Label+ Text Field)
+        JPanel panelApellido = new JPanel( new FlowLayout(FlowLayout.RIGHT));
+        apellido = new JLabel("Apellido:" + "             ");
+        campo_apellido= new JTextField(20);
+        panelApellido.add(apellido);
+        panelApellido.add(campo_apellido);
 
         // Panel para contraseña (label + text field)
         JPanel panelContraseña = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -87,6 +96,7 @@ public class VentanaRegistroUsuario extends JFrame {
 
         // Agregar los paneles al panel principal
         panelPrincipal.add(panelNombre);
+        panelPrincipal.add(panelApellido);
         panelPrincipal.add(panelContraseña);
         panelPrincipal.add(panelConfirmarContraseña);
         panelPrincipal.add(panelComboBox);
@@ -115,7 +125,7 @@ public class VentanaRegistroUsuario extends JFrame {
         //Boton Ok para añadir el usuario a la lista
         botonOk.addActionListener(e->{
         	String nombre= campo_nombreUsuario.getText();
-        	String apellido= new String();
+        	String apellido= campo_apellido.getText();
         	String contraseña=campo_contraseña.getText().trim();
         	String confirmar=campo_confirmar_contraseña.getText();
         	  

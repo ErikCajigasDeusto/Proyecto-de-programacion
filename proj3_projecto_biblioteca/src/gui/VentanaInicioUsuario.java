@@ -11,19 +11,20 @@ import domain.Prestamo;
 
 public class VentanaInicioUsuario extends JFrame {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private JTextField campo_nombreUsuario;
-    private JPasswordField campo_contraseña;
-    private JLabel contraseña;
-    private JButton botonOk;
-    private JButton botonCancelar;
-    
-    private List<Libro> librosList;
-    private List<Miembro> miembrosList;
-    private List<Prestamo> prestamosList;
+	private JTextField campo_nombreUsuario;
+	private JTextField campo_apellido;
+	private JPasswordField campo_contraseña;
+	private JLabel contraseña;
+	private JButton botonOk;
+	private JButton botonCancelar;
 
-    public VentanaInicioUsuario(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos) {
+	private List<Libro> librosList;
+	private List<Miembro> miembrosList;
+	private List<Prestamo> prestamosList;
+
+	public VentanaInicioUsuario(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos) {
         this.librosList = libros;
         this.miembrosList = miembros;
         this.prestamosList = prestamos;
@@ -38,10 +39,15 @@ public class VentanaInicioUsuario extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         JPanel panelNombre = new JPanel(new FlowLayout());
-        panelNombre.add(new JLabel("Usuario:"));
+        panelNombre.add(new JLabel("Nombre:"));
         campo_nombreUsuario = new JTextField(20);
         panelNombre.add(campo_nombreUsuario);
-
+        
+        JPanel panelApellido = new JPanel (new FlowLayout());
+        panelApellido.add(new JLabel("Apellido:"));
+        campo_apellido = new JTextField(20);
+        panelApellido.add(campo_apellido);
+        
         // Panel para contraseña (label + text field)
         JPanel panelContraseña = new JPanel(new FlowLayout(FlowLayout.CENTER));
         contraseña = new JLabel("Contraseña:");
@@ -57,6 +63,7 @@ public class VentanaInicioUsuario extends JFrame {
         panelBotones.add(botonCancelar);
 
         panel.add(panelNombre);
+        panel.add(panelApellido);
         panel.add(panelContraseña);
         panel.add(panelBotones);
 
@@ -67,11 +74,19 @@ public class VentanaInicioUsuario extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombre = campo_nombreUsuario.getText().trim();
-                String contraseña = String.valueOf(campo_contraseña.getPassword());
+
+                String apellido = campo_apellido.getText().trim();
+                String contraseña = new String(campo_contraseña.getPassword()).trim();
+
 
                 Miembro encontrado = null;
                 for (Miembro m : miembrosList) {
-                    if (m.getNombre().equalsIgnoreCase(nombre) && m.getpassword().equals(contraseña)) {
+
+
+                    if (m.getNombre().equalsIgnoreCase(nombre) &&
+                            m.getApellido().equalsIgnoreCase(apellido) &&
+                            m.getpassword().equals(contraseña)) {
+
                         encontrado = m;
                         break;
                     }
@@ -79,7 +94,7 @@ public class VentanaInicioUsuario extends JFrame {
 
                 if (encontrado != null) {
                     JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 
-                            "Inicio de sesión correcto, bienvenido " + encontrado.getNombre());
+                            "Inicio de sesión correcto, bienvenido " + encontrado.getNombre() + " "+ encontrado.getApellido());
                     new VentanaConsultar(librosList, miembrosList, prestamosList, encontrado);
                     dispose();
                 } else {
@@ -87,12 +102,13 @@ public class VentanaInicioUsuario extends JFrame {
                             "Usuario no encontrado. Inténtalo de nuevo.");
                 }
             }
-        });
+            });
 
         // Acción: botón Cancelar
         botonCancelar.addActionListener(e -> dispose());
 
         setVisible(true);
-    }
-}
+        }
+	}
+
 
