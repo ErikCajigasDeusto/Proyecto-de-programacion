@@ -214,7 +214,17 @@ public class Ventana_Alquilar extends JPanel {
 
 	private void initTabla() {
 		Vector<String> cabecera = new Vector<>(Arrays.asList("ID", "Título", "Género", "Autor", "Precio", "Duración", "Disponible"));
-		this.modeloDatos = new DefaultTableModel(new Vector<>(), cabecera);
+		this.modeloDatos = new DefaultTableModel(new Vector<>(), cabecera) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+			    return false; 
+			}
+		};
 		this.TablalibrosDisponibles = new JTable(this.modeloDatos);
 
 		TableCellRenderer cellRenderer = (table, value, isSelected, hasFocus, row, column) -> {
