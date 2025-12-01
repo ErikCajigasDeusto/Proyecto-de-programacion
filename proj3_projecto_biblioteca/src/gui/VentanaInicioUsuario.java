@@ -67,11 +67,11 @@ public class VentanaInicioUsuario extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombre = campo_nombreUsuario.getText().trim();
-                String telefono = campo_contraseña.getText().trim();
+                String contraseña = String.valueOf(campo_contraseña.getPassword());
 
                 Miembro encontrado = null;
                 for (Miembro m : miembrosList) {
-                    if (m.getNombre().equalsIgnoreCase(nombre) && m.getpassword().equals(telefono)) {
+                    if (m.getNombre().equalsIgnoreCase(nombre) && m.getpassword().equals(contraseña)) {
                         encontrado = m;
                         break;
                     }
