@@ -27,7 +27,7 @@ import domain.Libro;
 import domain.Miembro;
 import domain.Genero;
 
-public class Ventana_Alquilar extends JPanel {
+public class VentanaAlquilar extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private List<Libro> libros;
@@ -44,7 +44,7 @@ public class Ventana_Alquilar extends JPanel {
 	private JComboBox<Genero> generoBox = new JComboBox<>();
 
 	// Constructor
-	public Ventana_Alquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos, VentanaConsultar ventana) {
+	public VentanaAlquilar(List<Libro> libros, List<Miembro> miembros, List<Prestamo>prestamos, VentanaConsultar ventana) {
 		this.ventana = ventana;
 		this.libros = libros;
 		this.miembros = miembros;
