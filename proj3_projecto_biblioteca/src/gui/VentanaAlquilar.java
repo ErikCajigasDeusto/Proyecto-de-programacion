@@ -159,24 +159,29 @@ public class VentanaAlquilar extends JPanel {
 	private void alquilar(Miembro miembro) {
 		
 		int	contador = prestamos.getLast().getId()+1;
-
+		libros.get(libros.indexOf(seleccionado)).setCantidad(seleccionado.getCantidad()-1);;
+		reset();
 		prestamos.add(new Prestamo(contador, seleccionado, miembro, LocalDate.now(), serialVersionUID));
 		JOptionPane.showMessageDialog(this, "Libro alquilado");
 	}
 
-	private void reset() {
+	public void reset() {
 		this.modeloDatos.setRowCount(0);
 		for (Libro libro : libros) {
-			this.modeloDatos.addRow(new Object[]{
-					libro.getId_libro(),
-					libro.getTitulo(),
-					libro.getGenero().name(),
-					libro.getAutor().getNombreApellido(),
-					libro.getPrecio(),
-					5,
-					true
-			});
+			
+			if(libro.isDisponible()) {
+				this.modeloDatos.addRow(new Object[]{
+						libro.getId_libro(),
+						libro.getTitulo(),
+						libro.getGenero().name(),
+						libro.getAutor().getNombreApellido(),
+						libro.getPrecio(),
+						libro.getDuracionPrestamo(),
+						libro.getCantidad()
+				});
+			}
 		}
+		generoBox.setSelectedItem(Genero.DEFECTO);
 		tituloTexto.setText("");
 		autorTexto.setText("");
 	}
@@ -185,17 +190,17 @@ public class VentanaAlquilar extends JPanel {
 		this.modeloDatos.setRowCount(0);
 		for (Libro libro : libros) {
 			
-			if(String.valueOf(generoBox.getSelectedItem()).toUpperCase().equals(Genero.DEFECTO.name().toUpperCase()) && (libro.getTitulo().toUpperCase().contains(tituloTexto.getText().toUpperCase())) && (libro.getAutor().getNombreApellido().toUpperCase().contains(autorTexto.getText().toUpperCase()))) {
+			if(libro.isDisponible() && String.valueOf(generoBox.getSelectedItem()).toUpperCase().equals(Genero.DEFECTO.name().toUpperCase()) && (libro.getTitulo().toUpperCase().contains(tituloTexto.getText().toUpperCase())) && (libro.getAutor().getNombreApellido().toUpperCase().contains(autorTexto.getText().toUpperCase()))) {
 				this.modeloDatos.addRow(new Object[]{
 						libro.getId_libro(),
 						libro.getTitulo(),
 						libro.getGenero().name(),
 						libro.getAutor().getNombreApellido(),
 						libro.getPrecio(),
-						5,
-						true
+						libro.getDuracionPrestamo(),
+						libro.getCantidad()
 				});
-			}else if (libro.getTitulo().toUpperCase().contains(tituloTexto.getText().toUpperCase()) &&
+			}else if (libro.isDisponible() && libro.getTitulo().toUpperCase().contains(tituloTexto.getText().toUpperCase()) &&
 				libro.getAutor().getNombreApellido().toUpperCase().contains(autorTexto.getText().toUpperCase()) &&
 				libro.getGenero().name().equalsIgnoreCase(String.valueOf(generoBox.getSelectedItem()))) {
 
@@ -205,15 +210,15 @@ public class VentanaAlquilar extends JPanel {
 						libro.getGenero().name(),
 						libro.getAutor().getNombreApellido(),
 						libro.getPrecio(),
-						5,
-						true
+						libro.getDuracionPrestamo(),
+						libro.getCantidad()
 				});
 			}
 		}
 	}
 
 	private void initTabla() {
-		Vector<String> cabecera = new Vector<>(Arrays.asList("ID", "Título", "Género", "Autor", "Precio", "Duración", "Disponible"));
+		Vector<String> cabecera = new Vector<>(Arrays.asList("ID", "Título", "Género", "Autor", "Precio", "Duración", "Cantidad"));
 		this.modeloDatos = new DefaultTableModel(new Vector<>(), cabecera) {
 			/**
 			 * 
@@ -294,8 +299,8 @@ public class VentanaAlquilar extends JPanel {
 				c.getGenero().name(),
 				c.getAutor().getNombreApellido(),
 				c.getPrecio(),
-				5,
-				true
+				c.getDuracionPrestamo(),
+				c.getCantidad()
 		}));
 	}
 }

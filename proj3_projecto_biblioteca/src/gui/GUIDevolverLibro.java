@@ -46,10 +46,10 @@ public class GUIDevolverLibro extends JPanel{
 	private GUIVentanaComprobacion hija = null;
 	
 	
-	public GUIDevolverLibro(List<Prestamo> prestamos, List<Miembro> miembros) {
+	public GUIDevolverLibro(List<Prestamo> prestamos, List<Miembro> miembros, List<Libro> libros, VentanaAlquilar ventanaAlquilar) {
 		//Asignamos la lista de prestamos a la variable local
 				this.prestamos = prestamos;
-				this.miembros = miembros;
+				this.miembros = miembros;;
 				
 				setLayout(new BorderLayout(10, 10));
 				setBackground(Color.WHITE);
@@ -119,6 +119,9 @@ public class GUIDevolverLibro extends JPanel{
 							}
 							if(prestamo!=null) {
 								txtvalor.setText("");
+								Libro libro = prestamo.getLibro();
+								libros.get(libros.indexOf(libro)).setCantidad(libro.getCantidad() + 1);
+								ventanaAlquilar.reset();
 								prestamos.remove(prestamo);
 								filtrarPrestamos();
 								JOptionPane.showMessageDialog(GUIDevolverLibro.this, "Has pagado el libro, gracias");
