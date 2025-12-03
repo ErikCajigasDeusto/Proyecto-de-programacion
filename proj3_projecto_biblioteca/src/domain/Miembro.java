@@ -25,7 +25,6 @@ public class Miembro{
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.password = password;
-		this.membresia = new Membresia();
 	}
 	
 	/**

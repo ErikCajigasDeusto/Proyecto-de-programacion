@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import domain.Membresia;
 import domain.Miembro;
 import main.Main;
 
@@ -82,7 +83,7 @@ public class VentanaRegistroUsuario extends JFrame {
         nivel = new JLabel("Nivel");
         
         JComboBox<String> paisCombo = new JComboBox<>(new String[]{
-                "Normal", "Premium"});
+                "Normal", "Premium", "VIP"});
         		
         panelComboBox.add(nivel);
         panelComboBox.add(paisCombo);
@@ -150,7 +151,8 @@ public class VentanaRegistroUsuario extends JFrame {
         	            JOptionPane.showMessageDialog(this, "Error al registrar el miembro en la base de datos");
         	        }
         	        int IdUsuario = miembros.size() + 1;
-        	        Miembro nuevo = new Miembro(IdUsuario, nombre, apellido, contraseña);
+        	        String nivelMembresia = (String) paisCombo.getSelectedItem();
+        	        Miembro nuevo = new Miembro(IdUsuario, nombre, apellido, contraseña, Membresia.valueOf(nivelMembresia.toUpperCase()));
         	        miembros.add(nuevo);
         	        JOptionPane.showMessageDialog(this, "Usuario registrado");//nuevo usuario registrado
         	        dispose(); 

@@ -95,7 +95,8 @@ public class Main {
                     String nombre = rsMiembro.getString("NOMBRE");
                     String apellido = rsMiembro.getString("APELLIDO");
                     String contrasena = rsMiembro.getString("CONTRASEÑA");
-                    miembros.add(new Miembro(id, nombre, apellido, contrasena));
+                    String membresia = rsMiembro.getString("MEMBRESIA");
+                    miembros.add(new Miembro(id, nombre, apellido, contrasena, Membresia.valueOf(membresia)));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
