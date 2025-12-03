@@ -9,6 +9,8 @@ public class Libro {
 	private Autor autor;
 	private Editorial editorial;
 	private static int duracionPrestamo = 5;
+	private int cantidad;
+	private boolean disponible;
 	
 	
 	
@@ -37,7 +39,7 @@ public class Libro {
 	 * @param autor
 	 * @param editotrial
 	 */
-	public Libro(int id_libro, String titulo, Genero genero, float precio, Autor autor, Editorial editorial) {
+	public Libro(int id_libro, String titulo, Genero genero, float precio, Autor autor, Editorial editorial, int cantidad) {
 		
 		this.id_libro = id_libro;
 		this.titulo = titulo;
@@ -45,8 +47,25 @@ public class Libro {
 		this.precio = precio;
 		this.autor = autor;
 		this.editorial = editorial;
+		this.cantidad = cantidad;
 	}
 
+	public boolean isDisponible() {
+		if(this.cantidad>0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
+	}
+	public int getCantidad() {
+		return cantidad;
+	}
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
 	/**
 	 * @return the id_libro
 	 */

@@ -77,7 +77,7 @@ public class Main {
                     int autorId = rsLibro.getInt("ID_AUTOR");
                     int editorialId = rsLibro.getInt("ID_EDITORIAL");
 
-                    Libro libro = new Libro(id, titulo, Genero.valueOf(genero), precio, autores.get(autorId - 1), editoriales.get(editorialId - 1));
+                    Libro libro = new Libro(id, titulo, Genero.valueOf(genero), precio, autores.get(autorId - 1), editoriales.get(editorialId - 1), 5);
                     libros.add(libro);
                 }
             } catch (SQLException e) {
