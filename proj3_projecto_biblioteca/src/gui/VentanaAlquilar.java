@@ -176,7 +176,7 @@ public class VentanaAlquilar extends JPanel {
 						libro.getGenero().name(),
 						libro.getAutor().getNombreApellido(),
 						libro.getPrecio(),
-						5,
+						libro.getDuracionPrestamo(),
 						libro.getCantidad()
 				});
 			}
@@ -197,7 +197,7 @@ public class VentanaAlquilar extends JPanel {
 						libro.getGenero().name(),
 						libro.getAutor().getNombreApellido(),
 						libro.getPrecio(),
-						5,
+						libro.getDuracionPrestamo(),
 						libro.getCantidad()
 				});
 			}else if (libro.isDisponible() && libro.getTitulo().toUpperCase().contains(tituloTexto.getText().toUpperCase()) &&
@@ -210,7 +210,7 @@ public class VentanaAlquilar extends JPanel {
 						libro.getGenero().name(),
 						libro.getAutor().getNombreApellido(),
 						libro.getPrecio(),
-						5,
+						libro.getDuracionPrestamo(),
 						libro.getCantidad()
 				});
 			}
@@ -299,7 +299,7 @@ public class VentanaAlquilar extends JPanel {
 				c.getGenero().name(),
 				c.getAutor().getNombreApellido(),
 				c.getPrecio(),
-				5,
+				c.getDuracionPrestamo(),
 				c.getCantidad()
 		}));
 	}
