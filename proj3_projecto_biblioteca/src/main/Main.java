@@ -24,7 +24,7 @@ public class Main {
         }
 
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:src/resources/db/ProyectoBiblioteca.db")) {
-            System.out.println("Conectado a la base de datos SQLite");
+            
 
             //EDITORIALES
             List<Editorial> editoriales = new ArrayList<>();
@@ -77,7 +77,7 @@ public class Main {
                     int autorId = rsLibro.getInt("ID_AUTOR");
                     int editorialId = rsLibro.getInt("ID_EDITORIAL");
 
-                    Libro libro = new Libro(id, titulo, Genero.valueOf(genero), precio, autores.get(autorId - 1), editoriales.get(editorialId - 1));
+                    Libro libro = new Libro(id, titulo, Genero.valueOf(genero), precio, autores.get(autorId - 1), editoriales.get(editorialId - 1), 5);
                     libros.add(libro);
                 }
             } catch (SQLException e) {
@@ -99,8 +99,7 @@ public class Main {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            for (Miembro miembro : miembros) {
-            }
+            
             //PRESTAMOS
             String prestamoQuery = "SELECT * FROM PRESTAMO";
             try (Statement stmt = conn.createStatement();
