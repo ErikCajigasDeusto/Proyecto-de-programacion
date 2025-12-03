@@ -76,8 +76,9 @@ public class Main {
                     float precio = rsLibro.getFloat("PRECIO");
                     int autorId = rsLibro.getInt("ID_AUTOR");
                     int editorialId = rsLibro.getInt("ID_EDITORIAL");
+                    int cantidad = rsLibro.getInt("CANTIDAD");
 
-                    Libro libro = new Libro(id, titulo, Genero.valueOf(genero), precio, autores.get(autorId - 1), editoriales.get(editorialId - 1), 5);
+                    Libro libro = new Libro(id, titulo, Genero.valueOf(genero), precio, autores.get(autorId - 1), editoriales.get(editorialId - 1), cantidad);
                     libros.add(libro);
                 }
             } catch (SQLException e) {
