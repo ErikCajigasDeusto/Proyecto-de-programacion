@@ -1,4 +1,4 @@
-package main;
+package db;
 
 import java.io.FileReader;
 import java.sql.*;

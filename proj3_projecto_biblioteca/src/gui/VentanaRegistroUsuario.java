@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import db.GestorBD;
 import domain.Membresia;
 import domain.Miembro;
-import main.GestorBD;
 
 public class VentanaRegistroUsuario extends JFrame {
 

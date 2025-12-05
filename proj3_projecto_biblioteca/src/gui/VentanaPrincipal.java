@@ -13,10 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import db.GestorBD;
 import domain.Libro;
 import domain.Miembro;
 import domain.Prestamo;
-import main.GestorBD;
 
 public class VentanaPrincipal extends JFrame {
 
