@@ -81,9 +81,12 @@ public class VentanaRegistroUsuario extends JFrame {
         JPanel panelComboBox = new JPanel(new FlowLayout(FlowLayout.CENTER));
         nivel = new JLabel("Nivel");
         
-        JComboBox<String> comboNivel = new JComboBox<>(new String[]{
-                "Normal", "Premium", "VIP"});
-        		
+        String[]nivelList = new String[]{"Normal", "Premium", "VIP"};
+        JComboBox<String> comboNivel = new JComboBox<>();
+        for(String nivelstr:nivelList) {
+        	comboNivel.addItem(nivelstr);
+        }
+        comboNivel.setSelectedItem(nivelList[0]);
         panelComboBox.add(nivel);
         panelComboBox.add(comboNivel);
         
