@@ -67,6 +67,7 @@ public class VentanaAlquilar extends JPanel {
 		for (Genero genero : Genero.values()) {
 			generoBox.addItem(genero);
 		}
+		generoBox.setSelectedItem(Genero.DEFECTO);
 		generoBox.setEditable(false);
 		panelBuscador.add(tituloBuscar);
 		panelBuscador.add(tituloTexto);

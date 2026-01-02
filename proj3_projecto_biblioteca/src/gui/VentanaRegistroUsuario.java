@@ -3,9 +3,6 @@ package gui;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -17,8 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import db.GestorBD;
+import domain.Membresia;
 import domain.Miembro;
-import main.Main;
 
 public class VentanaRegistroUsuario extends JFrame {
 
@@ -36,10 +34,12 @@ public class VentanaRegistroUsuario extends JFrame {
     private JLabel nivel;
     private JButton botonOk;
     private JButton botonCancelar;
+    private GestorBD gestor;
 
-    public VentanaRegistroUsuario(List<Miembro> miembros) {
-        this.setMiembros(miembros);
-        
+    public VentanaRegistroUsuario(List<Miembro> miembros, GestorBD gestor) {
+        this.miembros = miembros;
+        this.gestor = gestor;
+
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Biblioteca");
         setSize(400, 250);
@@ -81,11 +81,14 @@ public class VentanaRegistroUsuario extends JFrame {
         JPanel panelComboBox = new JPanel(new FlowLayout(FlowLayout.CENTER));
         nivel = new JLabel("Nivel");
         
-        JComboBox<String> paisCombo = new JComboBox<>(new String[]{
-                "Normal", "Premium"});
-        		
+        String[]nivelList = new String[]{"Normal", "Premium", "VIP"};
+        JComboBox<String> comboNivel = new JComboBox<>();
+        for(String nivelstr:nivelList) {
+        	comboNivel.addItem(nivelstr);
+        }
+        comboNivel.setSelectedItem(nivelList[0]);
         panelComboBox.add(nivel);
-        panelComboBox.add(paisCombo);
+        panelComboBox.add(comboNivel);
         
         // Panel para botones (OK y Cancelar)
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -143,14 +146,11 @@ public class VentanaRegistroUsuario extends JFrame {
         	    	JOptionPane.showMessageDialog(this, "Las contraseñas no son iguales");//si la contraseña ni concuerda con la 2ª vez que se escribe la contraseña
         	    } else {
         	   
-        	        //CONECTAMOS A LA BASE DE DATOS
-        	        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:src/resources/db/ProyectoBiblioteca.db")) {
-        	            Main.nuevoMiembro(conn, nombre, apellido, contraseña); 
-        	        } catch (SQLException ex) {
-        	            JOptionPane.showMessageDialog(this, "Error al registrar el miembro en la base de datos");
-        	        }
+        	    	gestor.nuevoMiembro(nombre, apellido, contraseña);
+
         	        int IdUsuario = miembros.size() + 1;
-        	        Miembro nuevo = new Miembro(IdUsuario, nombre, apellido, contraseña);
+        	        String nivelMembresia = (String) comboNivel.getSelectedItem();	
+        	        Miembro nuevo = new Miembro(IdUsuario, nombre, apellido, contraseña, Membresia.valueOf(nivelMembresia.toUpperCase()));
         	        miembros.add(nuevo);
         	        JOptionPane.showMessageDialog(this, "Usuario registrado");//nuevo usuario registrado
         	        dispose(); 

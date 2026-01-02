@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import db.GestorBD;
 import domain.Libro;
 import domain.Miembro;
 import domain.Prestamo;
@@ -24,11 +25,13 @@ public class VentanaPrincipal extends JFrame {
     private List<Libro> libros;
     private List<Miembro> miembros;
     private List<Prestamo> prestamos;
+    private GestorBD gestor; 
 
-    public VentanaPrincipal(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos) {
+    public VentanaPrincipal(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos, GestorBD gestor) {
         this.libros = libros;
         this.miembros = miembros;
         this.prestamos = prestamos;
+        this.gestor = gestor;
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Biblioteca");
@@ -84,7 +87,7 @@ public class VentanaPrincipal extends JFrame {
         add(panelBotones, BorderLayout.SOUTH);
 
         // Lambdas para acciones de los botones
-        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario(this.miembros));
+        botonUsuario.addActionListener(e -> new VentanaRegistroUsuario(this.miembros, this.gestor));
         botonMiembro.addActionListener(e -> new VentanaInicioUsuario(this.libros, this.miembros, this.prestamos));
 
         setVisible(true);

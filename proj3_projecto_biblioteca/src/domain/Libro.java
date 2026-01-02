@@ -6,11 +6,11 @@ public class Libro {
 	private String titulo;
 	private Genero genero;
 	private float precio;
+	private float precioConDesc;
 	private Autor autor;
 	private Editorial editorial;
 	private static int duracionPrestamo = 5;
 	private int cantidad;
-	private boolean disponible;
 	
 	
 	
@@ -48,6 +48,7 @@ public class Libro {
 		this.autor = autor;
 		this.editorial = editorial;
 		this.cantidad = cantidad;
+		this.precioConDesc = precio;
 	}
 
 	public boolean isDisponible() {
@@ -57,8 +58,11 @@ public class Libro {
 			return false;
 		}
 	}
-	public void setDisponible(boolean disponible) {
-		this.disponible = disponible;
+	public float getPrecioConDesc() {
+		return precioConDesc;
+	}
+	public void setPrecioConDesc(float precioConDesc) {
+		this.precioConDesc = precioConDesc;
 	}
 	public int getCantidad() {
 		return cantidad;

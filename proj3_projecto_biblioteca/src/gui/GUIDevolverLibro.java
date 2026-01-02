@@ -73,7 +73,7 @@ public class GUIDevolverLibro extends JPanel{
 				{
 					miembrosBox.addItem(actual.getNombreApellido());;
 				}
-				
+				miembrosBox.setSelectedItem(miembros.getFirst());
 						
 				//Consiste en el titulo del texto
 				JLabel titulo = new JLabel("Devolución de prestamos", SwingConstants.CENTER);
@@ -221,17 +221,21 @@ public class GUIDevolverLibro extends JPanel{
 		this.tablaPrestamos.getSelectionModel().addListSelectionListener(e -> {
 			//Se obtiene el ID del comic de la fila seleccionada si es distinta de -1
 			if (tablaPrestamos.getSelectedRow() != -1) {
-				
-				seleccionado = (this.prestamos.get((int) tablaPrestamos.getValueAt(tablaPrestamos.getSelectedRow(), 0) - 1)).getLibro();
+				String nombreLibro = tablaPrestamos.getValueAt(tablaPrestamos.getSelectedRow(), 1).toString();
+				for(Prestamo prestamo:prestamos) {
+					if(prestamo.getLibro().getTitulo().equals(nombreLibro)&&prestamo.getMiembro().getNombreApellido().equals(miembrosBox.getSelectedItem())) {
+						seleccionado = prestamo.getLibro();
+					}
+				}
 				LocalDate actual = LocalDate.now();
 				int dif = (int)(ChronoUnit.DAYS.between((this.prestamos.get((int) tablaPrestamos.getValueAt(tablaPrestamos.getSelectedRow(), 0) - 1)).getFecha_inicial_prestamo(), actual));
 				
 				if(dif>seleccionado.getDuracionPrestamo())
 				{
-					txtvalor.setText(String.valueOf(seleccionado.getPrecio()*1.5));
+					txtvalor.setText(String.valueOf(seleccionado.getPrecioConDesc()*1.5));
 				}else
 				{
-					txtvalor.setText(String.valueOf(seleccionado.getPrecio()));
+					txtvalor.setText(String.valueOf(seleccionado.getPrecioConDesc()));
 				}
 				
 				
@@ -251,6 +255,18 @@ public class GUIDevolverLibro extends JPanel{
 	}
 	
 
+	private void aplicarDescuento(Miembro miembro) {
+		for (Prestamo prestamo:prestamos) {
+			if(miembro.getMembresia().equals(Membresia.PREMIUM)&&prestamo.getMiembro().equals(miembro)) {
+				prestamo.getLibro().setPrecioConDesc(prestamo.getLibro().getPrecio() - prestamo.getLibro().getPrecio()*0.05f); 
+			}else if(miembro.getMembresia().equals(Membresia.VIP)&&prestamo.getMiembro().equals(miembro)) {
+				prestamo.getLibro().setPrecioConDesc(prestamo.getLibro().getPrecio() - prestamo.getLibro().getPrecio()*0.1f);
+			}
+		}
+	}
+	
+	
+	
     public void recibirTexto(String usuario, String contra) {
     	
     	if(miembrosBox.getSelectedIndex()!=-1)
@@ -261,6 +277,9 @@ public class GUIDevolverLibro extends JPanel{
     			{
     				idbuscado= miembro.getId();
     				filtrarPrestamos();
+    				if(miembro.getMembresia().equals(Membresia.PREMIUM)||miembro.getMembresia().equals(Membresia.VIP)) {
+    					aplicarDescuento(miembro);
+    				}
     				return;
     			}else
     			{
@@ -291,7 +310,6 @@ public class GUIDevolverLibro extends JPanel{
     						prestamo_cont++;
     					}
     		}
-    		System.out.println(prestamo_cont);
     	}
     	
     }
