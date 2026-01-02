@@ -103,18 +103,15 @@ public class VentanaInicioUsuario extends JFrame {
 
 	private void tiempoCarga(final Miembro objeto) {
 		panel_progreso.setVisible(true);
+		
+		botonOk.setEnabled(false);
+		botonCancelar.setEnabled(false);
+		
 		for (int i = 0; i <= 3 && !Thread.currentThread().isInterrupted(); i++) {
 
-			/**
-			 * para que swing no valla a petar hay que usar la libreria SwingUtilities
-			 * usando la funcion invokeLater. Para que la función sea ejecutada cuando Swing
-			 * pueda
-			 */
+			
 			final int contador = i;
 
-			/**
-			 * ambos swing hace lo mismo pero el segundo se contara mas en los examens
-			 */
 
 			SwingUtilities.invokeLater(() -> progressBar.setValue(contador));
 
@@ -136,6 +133,8 @@ public class VentanaInicioUsuario extends JFrame {
 			JOptionPane.showMessageDialog(VentanaInicioUsuario.this, "Usuario no encontrado. Inténtalo de nuevo.");
 			progressBar.setValue(0);
 			panel_progreso.setVisible(false);
+			botonOk.setEnabled(true);
+			botonCancelar.setEnabled(true);
 			t.interrupt();
 		}
 	}
