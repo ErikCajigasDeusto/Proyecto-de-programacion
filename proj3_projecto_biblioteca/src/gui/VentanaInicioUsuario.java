@@ -14,101 +14,129 @@ public class VentanaInicioUsuario extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private JTextField campo_nombreUsuario;
-	private JTextField campo_apellido;
 	private JPasswordField campo_contraseña;
 	private JLabel contraseña;
 	private JButton botonOk;
 	private JButton botonCancelar;
+	private JProgressBar progressBar;
 
 	private List<Libro> librosList;
 	private List<Miembro> miembrosList;
 	private List<Prestamo> prestamosList;
+	private Thread t;
+	JPanel panel_progreso;
 
 	public VentanaInicioUsuario(List<Libro> libros, List<Miembro> miembros, List<Prestamo> prestamos) {
-        this.librosList = libros;
-        this.miembrosList = miembros;
-        this.prestamosList = prestamos;
-        
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setTitle("Iniciar Sesión");
-        setSize(370, 180);
-        setLocationRelativeTo(null);
-        setResizable(false);
+		this.librosList = libros;
+		this.miembrosList = miembros;
+		this.prestamosList = prestamos;
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setTitle("Iniciar Sesión");
+		setSize(370, 180);
+		setLocationRelativeTo(null);
+		setResizable(false);
 
-        JPanel panelNombre = new JPanel(new FlowLayout());
-        panelNombre.add(new JLabel("Nombre:"));
-        campo_nombreUsuario = new JTextField(20);
-        panelNombre.add(campo_nombreUsuario);
-        
-        JPanel panelApellido = new JPanel (new FlowLayout());
-        panelApellido.add(new JLabel("Apellido:"));
-        campo_apellido = new JTextField(20);
-        panelApellido.add(campo_apellido);
-        
-        // Panel para contraseña (label + text field)
-        JPanel panelContraseña = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        contraseña = new JLabel("Contraseña:");
-        contraseña.setAlignmentX(LEFT_ALIGNMENT);
-        campo_contraseña = new JPasswordField(20);
-        panelContraseña.add(contraseña);
-        panelContraseña.add(campo_contraseña);
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        JPanel panelBotones = new JPanel(new FlowLayout());
-        botonOk = new JButton("OK");
-        botonCancelar = new JButton("Cancelar");
-        panelBotones.add(botonOk);
-        panelBotones.add(botonCancelar);
+		JPanel panelNombre = new JPanel(new FlowLayout());
+		panelNombre.add(new JLabel("Nombre:"));
+		campo_nombreUsuario = new JTextField(20);
+		panelNombre.add(campo_nombreUsuario);
 
-        panel.add(panelNombre);
-        panel.add(panelApellido);
-        panel.add(panelContraseña);
-        panel.add(panelBotones);
+		// Panel para contraseña (label + text field)
+		JPanel panelContraseña = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		contraseña = new JLabel("Contraseña:");
+		contraseña.setAlignmentX(LEFT_ALIGNMENT);
+		campo_contraseña = new JPasswordField(20);
+		panelContraseña.add(contraseña);
+		panelContraseña.add(campo_contraseña);
 
-        add(panel);
+		JPanel panelBotones = new JPanel(new FlowLayout());
+		botonOk = new JButton("OK");
+		botonCancelar = new JButton("Cancelar");
+		panelBotones.add(botonOk);
+		panelBotones.add(botonCancelar);
 
-        // Acción: botón OK (login)
-        botonOk.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String nombre = campo_nombreUsuario.getText().trim();
+		panel_progreso = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		progressBar = new JProgressBar(0, 3);
+		panel_progreso.add(progressBar);
+		panel_progreso.setVisible(false);
 
-                String apellido = campo_apellido.getText().trim();
-                String contraseña = new String(campo_contraseña.getPassword()).trim();
+		panel.add(panelNombre);
+		panel.add(panelContraseña);
+		panel.add(panelBotones);
+		panel.add(panel_progreso);
 
+		add(panel);
 
-                Miembro encontrado = null;
-                for (Miembro m : miembrosList) {
+		// Acción: botón OK (login)
+		botonOk.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nombre = campo_nombreUsuario.getText().trim();
 
+				String contraseña = new String(campo_contraseña.getPassword()).trim();
 
-                    if (m.getNombre().equalsIgnoreCase(nombre) &&
-                            m.getApellido().equalsIgnoreCase(apellido) &&
-                            m.getpassword().equals(contraseña)) {
+				Miembro encontrado = null;
+				for (Miembro m : miembrosList) {
 
-                        encontrado = m;
-                        break;
-                    }
-                }
+					if (m.getNombre().equalsIgnoreCase(nombre) && m.getpassword().equals(contraseña)) {
 
-                if (encontrado != null) {
-                    JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 
-                            "Inicio de sesión correcto, bienvenido " + encontrado.getNombre() + " "+ encontrado.getApellido());
-                    new VentanaConsultar(librosList, miembrosList, prestamosList, encontrado);
-                    dispose();
-                } else {
-                    JOptionPane.showMessageDialog(VentanaInicioUsuario.this, 
-                            "Usuario no encontrado. Inténtalo de nuevo.");
-                }
-            }
-            });
+						encontrado = m;
+						break;
+					}
+				}
+				final Miembro objeto = encontrado;
+				t = new Thread(() -> tiempoCarga(objeto));
+				t.start();
 
-        // Acción: botón Cancelar
-        botonCancelar.addActionListener(e -> dispose());
+			}
+		});
 
-        setVisible(true);
-        }
+		// Acción: botón Cancelar
+		botonCancelar.addActionListener(e -> dispose());
+
+		setVisible(true);
 	}
 
+	private void tiempoCarga(final Miembro objeto) {
+		panel_progreso.setVisible(true);
+		for (int i = 0; i <= 3 && !Thread.currentThread().isInterrupted(); i++) {
 
+			/**
+			 * para que swing no valla a petar hay que usar la libreria SwingUtilities
+			 * usando la funcion invokeLater. Para que la función sea ejecutada cuando Swing
+			 * pueda
+			 */
+			final int contador = i;
+
+			/**
+			 * ambos swing hace lo mismo pero el segundo se contara mas en los examens
+			 */
+
+			SwingUtilities.invokeLater(() -> progressBar.setValue(contador));
+
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// en el caso de que hemos despertado el hilo sin querer
+				Thread.currentThread().interrupt();
+			}
+		}
+
+		if (objeto != null && progressBar.getValue() == 3) {
+			JOptionPane.showMessageDialog(VentanaInicioUsuario.this,
+					"Inicio de sesión correcto, bienvenido " + objeto.getNombre() + " " + objeto.getApellido());
+			new VentanaConsultar(librosList, miembrosList, prestamosList, objeto);
+			dispose();
+			
+		} else {
+			JOptionPane.showMessageDialog(VentanaInicioUsuario.this, "Usuario no encontrado. Inténtalo de nuevo.");
+			progressBar.setValue(0);
+			panel_progreso.setVisible(false);
+			t.interrupt();
+		}
+	}
+}
