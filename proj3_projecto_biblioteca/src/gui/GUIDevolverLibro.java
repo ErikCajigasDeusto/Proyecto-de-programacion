@@ -24,6 +24,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import db.GestorBD;
 import domain.*;
 
 public class GUIDevolverLibro extends JPanel{
@@ -108,23 +110,29 @@ public class GUIDevolverLibro extends JPanel{
 					public void actionPerformed(ActionEvent e) {
 						// Pagar y eliminar el libro de la lista de prestamos
 						String miembrostr = (String) miembrosBox.getSelectedItem();
-						if ((!seleccionado.equals(null))&&idbuscado!=-1) {
-							Prestamo prestamo = null;
-							for(Prestamo prest:prestamos) {
-								if (prest.getLibro().equals(seleccionado) && prest.getMiembro().getNombreApellido().equals(miembrostr)) {
-									prestamo = prest;
-									break;
-								}
-								
-							}
-							if(prestamo!=null) {
-								txtvalor.setText("");
-								Libro libro = prestamo.getLibro();
-								libros.get(libros.indexOf(libro)).setCantidad(libro.getCantidad() + 1);
-								ventanaAlquilar.reset();
-								prestamos.remove(prestamo);
-								filtrarPrestamos();
-								JOptionPane.showMessageDialog(GUIDevolverLibro.this, "Has pagado el libro, gracias");
+					    if ((!seleccionado.equals(null)) && idbuscado != -1) {
+					        Prestamo prestamo = null;
+					        for (Prestamo prest : prestamos) {
+					            if (prest.getLibro().equals(seleccionado) && prest.getMiembro().getNombreApellido().equals(miembrostr)) {
+					                prestamo = prest;
+					                break;
+					            }
+					        }
+					        if (prestamo != null) {
+					            txtvalor.setText("");
+					            Libro libro = prestamo.getLibro();
+					            libros.get(libros.indexOf(libro)).setCantidad(libro.getCantidad() + 1);  // Actualizamos la cantidad en memoria
+
+	
+					            GestorBD gestor = new GestorBD();
+					            gestor.eliminarPrestamo(prestamo);  
+
+					            gestor.actualizarCantidadLibro(libro);
+
+					            ventanaAlquilar.reset();
+					            prestamos.remove(prestamo);
+					            filtrarPrestamos();
+					            JOptionPane.showMessageDialog(GUIDevolverLibro.this, "Has pagado el libro, gracias");
 							}
 						}
 					}

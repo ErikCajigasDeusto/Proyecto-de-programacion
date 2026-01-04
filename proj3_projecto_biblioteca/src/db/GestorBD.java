@@ -84,6 +84,29 @@ public class GestorBD {
         }
         return autores;
     }
+    
+    public List<Miembro> cargarMiembros() {
+        List<Miembro> miembros = new ArrayList<>();
+        String sql = "SELECT * FROM MIEMBRO";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                miembros.add(new Miembro(
+                        rs.getInt("ID_MIEMBRO"),
+                        rs.getString("NOMBRE"),
+                        rs.getString("APELLIDO"),
+                        rs.getString("CONTRASEÑA"),
+                        Membresia.valueOf(rs.getString("MEMBRESIA"))
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return miembros;
+    }
+
 
     public List<Libro> cargarLibros(List<Autor> autores, List<Editorial> editoriales) {
         List<Libro> libros = new ArrayList<>();
@@ -112,50 +135,7 @@ public class GestorBD {
         return libros;
     }
 
-    public List<Miembro> cargarMiembros() {
-        List<Miembro> miembros = new ArrayList<>();
-        String sql = "SELECT * FROM MIEMBRO";
 
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            while (rs.next()) {
-                miembros.add(new Miembro(
-                        rs.getInt("ID_MIEMBRO"),
-                        rs.getString("NOMBRE"),
-                        rs.getString("APELLIDO"),
-                        rs.getString("CONTRASEÑA"),
-                        Membresia.valueOf(rs.getString("MEMBRESIA"))
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return miembros;
-    }
-
-    public List<Prestamo> cargarPrestamos(List<Libro> libros, List<Miembro> miembros) {
-        List<Prestamo> prestamos = new ArrayList<>();
-        String sql = "SELECT * FROM PRESTAMO";
-
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-
-            while (rs.next()) {
-                prestamos.add(new Prestamo(
-                        rs.getInt("ID_PRESTAMO"),
-                        libros.get(rs.getInt("ID_LIBRO") - 1),
-                        miembros.get(rs.getInt("ID_MIEMBRO") - 1),
-                        LocalDate.parse(rs.getString("FECHA_INICIO")),
-                        0
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return prestamos;
-    }
     
     public void verMembresias() {
         String sql = "SELECT DISTINCT MEMBRESIA FROM MIEMBRO"; // Consulta SQL para ver los valores únicos
@@ -172,30 +152,144 @@ public class GestorBD {
             e.printStackTrace();
         }
     }
-    public void limpiarDatosIncorrectos() {
-        String sql = "UPDATE MIEMBRO SET MEMBRESIA = 'NORMAL' WHERE MEMBRESIA = 'BASICA'";  // Cambiar 'BASICA' a 'NORMAL'
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.executeUpdate();  // Ejecutar la actualización en la base de datos
-            System.out.println("Datos incorrectos limpiados.");
+    public List<Prestamo> cargarPrestamos(List<Libro> libros, List<Miembro> miembros) {
+        List<Prestamo> prestamos = new ArrayList<>();
+        String sql = "SELECT * FROM PRESTAMO";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                int libroId = rs.getInt("ID_LIBRO");
+                int miembroId = rs.getInt("ID_MIEMBRO");
+
+                if (libroId > 0 && miembroId > 0) {
+                    Libro libro = null;
+                    Miembro miembro = null;
+
+                    
+                    for (Libro l : libros) {
+                        if (l.getId_libro() == libroId) {
+                            libro = l;
+                            break;
+                        }
+                    }
+                    
+                    for (Miembro m : miembros) {
+                        if (m.getId() == miembroId) {
+                            miembro = m;
+                            break;
+                        }
+                    }
+
+                    if (libro != null && miembro != null) {
+                        prestamos.add(new Prestamo(
+                                rs.getInt("ID_PRESTAMO"),
+                                libro,
+                                miembro,
+                                LocalDate.parse(rs.getString("FECHA_INICIO")),
+                                0
+                        ));
+                    } else {
+                        System.out.println("ERROR: Préstamo con libro o miembro no válido - LIBRO_ID: " + libroId + ", MIEMBRO_ID: " + miembroId);
+                    }
+                } else {
+                    System.out.println("ERROR: ID_LIBRO o ID_MIEMBRO inválido - LIBRO_ID: " + libroId + ", MIEMBRO_ID: " + miembroId);
+                }
+            }
+
+            // Depuración: Imprimir la cantidad de préstamos cargados
+            System.out.println("Préstamos cargados desde la base de datos: " + prestamos.size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return prestamos;
+    }
+
+    
+    public void guardarPrestamo(Prestamo prestamo) {
+        String sql = "INSERT INTO PRESTAMO (ID_LIBRO, ID_MIEMBRO, FECHA_INICIO) VALUES (?, ?, ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(
+                sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, prestamo.getLibro().getId_libro());
+            stmt.setInt(2, prestamo.getMiembro().getId());
+            stmt.setString(3, prestamo.getFecha_inicial_prestamo().toString());
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                prestamo.setId(rs.getInt(1)); // ID REAL DE BD
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    // INSERCIÓN
-    public void nuevoMiembro(String nombre, String apellido, String contraseña) {
-        String sql = "INSERT INTO MIEMBRO (NOMBRE, APELLIDO, CONTRASEÑA, MEMBRESIA) VALUES (?, ?, ?, 'NORMAL')";
+
+    public void eliminarPrestamo(Prestamo prestamo) {
+        String sql = "DELETE FROM PRESTAMO WHERE ID_PRESTAMO = ?";
+
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, prestamo.getId()); 
+            stmt.executeUpdate(); 
+
+            Libro libro = prestamo.getLibro();
+            String updateCantidad = "UPDATE LIBRO SET CANTIDAD = ? WHERE ID_LIBRO = ?";
+            try (PreparedStatement stmtUpdate = conn.prepareStatement(updateCantidad)) {
+                stmtUpdate.setInt(1, libro.getCantidad() + 1);  
+                stmtUpdate.setInt(2, libro.getId_libro());
+                stmtUpdate.executeUpdate();  
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+
+    public void actualizarCantidadLibro(Libro libro) {
+        String sql = "UPDATE LIBRO SET CANTIDAD = ? WHERE ID_LIBRO = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, libro.getCantidad());  // Nueva cantidad
+            stmt.setInt(2, libro.getId_libro());  // ID del libro
+            stmt.executeUpdate();  // Ejecuta la actualización
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // INSERCIÓN
+    public int nuevoMiembro(String nombre, String apellido, String contraseña, Membresia membresia) {
+        String sql = "INSERT INTO MIEMBRO (NOMBRE, APELLIDO, CONTRASEÑA, MEMBRESIA) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement stmt = conn.prepareStatement(
+                sql, Statement.RETURN_GENERATED_KEYS)) {
+
             stmt.setString(1, nombre);
             stmt.setString(2, apellido);
             stmt.setString(3, contraseña);
+            stmt.setString(4, membresia.name());
             stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1); //ID REAL DE LA BD
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return -1;
     }
+
+  
 
     // CERRAR LA CONEXIÓN
     public void cerrar() {

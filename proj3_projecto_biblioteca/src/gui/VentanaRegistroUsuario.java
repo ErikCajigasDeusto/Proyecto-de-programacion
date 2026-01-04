@@ -145,15 +145,17 @@ public class VentanaRegistroUsuario extends JFrame {
         	    } else if(!contraseña.equals(confirmar)) {
         	    	JOptionPane.showMessageDialog(this, "Las contraseñas no son iguales");//si la contraseña ni concuerda con la 2ª vez que se escribe la contraseña
         	    } else {
-        	   
-        	    	gestor.nuevoMiembro(nombre, apellido, contraseña);
+        	    	String nivelMembresia = (String) comboNivel.getSelectedItem();
+        	    	Membresia mem = Membresia.valueOf(nivelMembresia.toUpperCase());
 
-        	        int IdUsuario = miembros.size() + 1;
-        	        String nivelMembresia = (String) comboNivel.getSelectedItem();	
-        	        Miembro nuevo = new Miembro(IdUsuario, nombre, apellido, contraseña, Membresia.valueOf(nivelMembresia.toUpperCase()));
-        	        miembros.add(nuevo);
-        	        JOptionPane.showMessageDialog(this, "Usuario registrado");//nuevo usuario registrado
-        	        dispose(); 
+        	    	
+        	    	int idReal = gestor.nuevoMiembro(nombre, apellido, contraseña, mem);   	    
+        	    	Miembro nuevo = new Miembro(idReal, nombre, apellido, contraseña, mem);
+        	    	miembros.add(nuevo);
+
+        	    	JOptionPane.showMessageDialog(this, "Usuario registrado");
+        	    	dispose();
+
         	    }
         	});
         	

@@ -22,6 +22,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import db.GestorBD;
 import domain.Prestamo;
 import domain.Libro;
 import domain.Miembro;
@@ -29,6 +30,8 @@ import domain.Genero;
 
 public class VentanaAlquilar extends JPanel {
 	private static final long serialVersionUID = 1L;
+	
+	
 	
 	private List<Libro> libros;
 	private List<Prestamo> prestamos;
@@ -158,13 +161,23 @@ public class VentanaAlquilar extends JPanel {
 	}
 
 	private void alquilar(Miembro miembro) {
-		
-		int	contador = prestamos.getLast().getId()+1;
-		libros.get(libros.indexOf(seleccionado)).setCantidad(seleccionado.getCantidad()-1);;
-		reset();
-		prestamos.add(new Prestamo(contador, seleccionado, miembro, LocalDate.now(), serialVersionUID));
-		JOptionPane.showMessageDialog(this, "Libro alquilado");
+	    // Obtén el próximo ID de préstamo (debe ser único)
+	    int contador = (prestamos.isEmpty()) ? 1 : prestamos.get(prestamos.size() - 1).getId() + 1;
+	    seleccionado.setCantidad(seleccionado.getCantidad() - 1);
+	    Prestamo nuevoPrestamo = new Prestamo(contador, seleccionado, miembro, LocalDate.now(), 0);
+
+	    // Guardamos el préstamo en la base de datos directamente
+	    GestorBD gestor = new GestorBD();  
+	    gestor.guardarPrestamo(nuevoPrestamo); 
+	    gestor.actualizarCantidadLibro(seleccionado);  
+
+	   
+	    prestamos.add(nuevoPrestamo);
+	    reset();  // Mantén tu lógica de actualización de la interfaz
+
+	    JOptionPane.showMessageDialog(this, "Libro alquilado con éxito");
 	}
+
 
 	public void reset() {
 		this.modeloDatos.setRowCount(0);
