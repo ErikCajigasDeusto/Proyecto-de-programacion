@@ -198,9 +198,7 @@ public class GestorBD {
                     System.out.println("ERROR: ID_LIBRO o ID_MIEMBRO inválido - LIBRO_ID: " + libroId + ", MIEMBRO_ID: " + miembroId);
                 }
             }
-
-            // Depuración: Imprimir la cantidad de préstamos cargados
-            System.out.println("Préstamos cargados desde la base de datos: " + prestamos.size());
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -288,8 +286,6 @@ public class GestorBD {
         }
         return -1;
     }
-
-  
 
     // CERRAR LA CONEXIÓN
     public void cerrar() {

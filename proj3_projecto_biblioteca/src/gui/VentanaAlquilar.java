@@ -31,8 +31,6 @@ import domain.Genero;
 public class VentanaAlquilar extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	
-	
 	private List<Libro> libros;
 	private List<Prestamo> prestamos;
 	private List<Miembro> miembros;
@@ -135,7 +133,7 @@ public class VentanaAlquilar extends JPanel {
 	private void iniciarSesion() {
 		boolean igual = false;
 		String username = JOptionPane.showInputDialog(null, "Escribe tu username:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
-		String password = JOptionPane.showInputDialog(null, "Escribe tu password:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
+		String password = JOptionPane.showInputDialog(null, "Escribe tu contraseña:", "Entrada de texto", JOptionPane.QUESTION_MESSAGE);
 		if((username!=null)&&(password!=null)) {
 			for(Miembro miembro:miembros) {
 				if(username.equals(miembro.getNombre())) {

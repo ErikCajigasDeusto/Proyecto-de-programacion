@@ -58,7 +58,7 @@ public class VentanaPrincipal extends JFrame {
                     ImageIcon icono = new ImageIcon(getClass().getResource("/biblioteca.png"));
                     imagenFondo = icono.getImage();
                 } catch (Exception e) {
-                    System.err.println("⚠ No se pudo cargar la imagen: " + e.getMessage());
+                    System.err.println("No se pudo cargar la imagen: " + e.getMessage());
                 }
             }
 
