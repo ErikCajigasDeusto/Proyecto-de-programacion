@@ -12,12 +12,15 @@ public class Main {
     public static void main(String[] args) {
 
         GestorBD gestor = new GestorBD();
+        gestor.limpiarDatosIncorrectos();
 
         List<Editorial> editoriales = gestor.cargarEditoriales();
         List<Autor> autores = gestor.cargarAutores();
         List<Libro> libros = gestor.cargarLibros(autores, editoriales);
         List<Miembro> miembros = gestor.cargarMiembros();
         List<Prestamo> prestamos = gestor.cargarPrestamos(libros, miembros);
+        
+        
 
         SwingUtilities.invokeLater(() -> {
             new VentanaPrincipal(libros, miembros, prestamos, gestor);

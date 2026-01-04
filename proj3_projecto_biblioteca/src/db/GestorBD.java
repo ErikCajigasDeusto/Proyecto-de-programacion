@@ -156,11 +156,36 @@ public class GestorBD {
 
         return prestamos;
     }
+    
+    public void verMembresias() {
+        String sql = "SELECT DISTINCT MEMBRESIA FROM MIEMBRO"; // Consulta SQL para ver los valores únicos
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                // Imprime los valores que están en la columna MEMBRESIA
+                System.out.println("Membresia: " + rs.getString("MEMBRESIA"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void limpiarDatosIncorrectos() {
+        String sql = "UPDATE MIEMBRO SET MEMBRESIA = 'NORMAL' WHERE MEMBRESIA = 'BASICA'";  // Cambiar 'BASICA' a 'NORMAL'
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.executeUpdate();  // Ejecutar la actualización en la base de datos
+            System.out.println("Datos incorrectos limpiados.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     // INSERCIÓN
     public void nuevoMiembro(String nombre, String apellido, String contraseña) {
-        String sql = "INSERT INTO MIEMBRO (NOMBRE, APELLIDO, CONTRASEÑA, MEMBRESIA) VALUES (?, ?, ?, 'BASICA')";
-
+        String sql = "INSERT INTO MIEMBRO (NOMBRE, APELLIDO, CONTRASEÑA, MEMBRESIA) VALUES (?, ?, ?, 'NORMAL')";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, nombre);
             stmt.setString(2, apellido);
