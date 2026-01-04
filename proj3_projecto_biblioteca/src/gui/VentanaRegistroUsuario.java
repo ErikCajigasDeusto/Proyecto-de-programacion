@@ -149,7 +149,7 @@ public class VentanaRegistroUsuario extends JFrame {
         	    	Membresia mem = Membresia.valueOf(nivelMembresia.toUpperCase());
 
         	    	
-        	    	int idReal = gestor.nuevoMiembro(nombre, apellido, contraseña, mem);   	    
+        	    	int idReal = this.gestor.nuevoMiembro(nombre, apellido, contraseña, mem);   	    
         	    	Miembro nuevo = new Miembro(idReal, nombre, apellido, contraseña, mem);
         	    	miembros.add(nuevo);
 
