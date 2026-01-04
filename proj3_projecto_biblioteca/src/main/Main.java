@@ -1,30 +1,20 @@
 package main;
 
-import java.util.List;
 import javax.swing.SwingUtilities;
-
-import db.GestorBD;
-import domain.*;
-import gui.*;
+import javax.swing.UIManager;
+import gui.SplashScreen; 
 
 public class Main {
 
     public static void main(String[] args) {
-
-        GestorBD gestor = new GestorBD();
-      
-        
-
-        List<Editorial> editoriales = gestor.cargarEditoriales();
-        List<Autor> autores = gestor.cargarAutores();
-        List<Miembro> miembros = gestor.cargarMiembros();
-        List<Libro> libros = gestor.cargarLibros(autores, editoriales);
-        List<Prestamo> prestamos = gestor.cargarPrestamos(libros, miembros);
-
         SwingUtilities.invokeLater(() -> {
-            new VentanaPrincipal(libros, miembros, prestamos, gestor);
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception ignored) {}
+
+            SplashScreen splash = new SplashScreen();
+            splash.setVisible(true);
         });
     }
 }
-	
 
